@@ -96,12 +96,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		HAL_Delay(10);
 		for(uint16_t i=0;i<500;i++){
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,i);
 			HAL_Delay(1);
 		}
-		for(uint16_t i=499;i>0;i++){
+		for(uint16_t i=499;i>0;i--){
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,i);
 			HAL_Delay(1);
 		}

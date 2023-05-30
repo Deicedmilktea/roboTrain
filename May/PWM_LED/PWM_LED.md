@@ -3,16 +3,17 @@
   ```C++
 while (1)
 {
-    HAL_Delay(10);
-    //占空比从0依次增大到100%，实现效果为led灯逐渐变亮
-    for(uint16_t i=0;i<500;i++){
-        __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,i);
-        HAL_Delay(1);
-    }
-    //占空比从100%依次减小到0，实现效果为led灯逐渐变暗
-    for(uint16_t i=499;i>0;i++){
-        __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,i);
-        HAL_Delay(1);
+    while(1){
+      //占空比从0依次增大到100%，实现效果为led灯逐渐变亮
+      for(uint16_t i=0;i<500;i++){
+          __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,i);
+          HAL_Delay(1);
+      }
+      //占空比从100%依次减小到0，实现效果为led灯逐渐变暗
+      for(uint16_t i=499;i>0;i++){
+          __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,i);
+          HAL_Delay(1);
+      }
     }
 }
   ```
