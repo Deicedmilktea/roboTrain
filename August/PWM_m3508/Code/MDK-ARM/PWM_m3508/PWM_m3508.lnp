@@ -1,0 +1,27 @@
+--cpu Cortex-M4.fp
+"pwm_m3508\startup_stm32f427xx.o"
+"pwm_m3508\main.o"
+"pwm_m3508\gpio.o"
+"pwm_m3508\tim.o"
+"pwm_m3508\stm32f4xx_it.o"
+"pwm_m3508\stm32f4xx_hal_msp.o"
+"pwm_m3508\stm32f4xx_hal_tim.o"
+"pwm_m3508\stm32f4xx_hal_tim_ex.o"
+"pwm_m3508\stm32f4xx_hal_rcc.o"
+"pwm_m3508\stm32f4xx_hal_rcc_ex.o"
+"pwm_m3508\stm32f4xx_hal_flash.o"
+"pwm_m3508\stm32f4xx_hal_flash_ex.o"
+"pwm_m3508\stm32f4xx_hal_flash_ramfunc.o"
+"pwm_m3508\stm32f4xx_hal_gpio.o"
+"pwm_m3508\stm32f4xx_hal_dma_ex.o"
+"pwm_m3508\stm32f4xx_hal_dma.o"
+"pwm_m3508\stm32f4xx_hal_pwr.o"
+"pwm_m3508\stm32f4xx_hal_pwr_ex.o"
+"pwm_m3508\stm32f4xx_hal_cortex.o"
+"pwm_m3508\stm32f4xx_hal.o"
+"pwm_m3508\stm32f4xx_hal_exti.o"
+"pwm_m3508\system_stm32f4xx.o"
+--strict --scatter "PWM_m3508\PWM_m3508.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "PWM_m3508.map" -o PWM_m3508\PWM_m3508.axf
