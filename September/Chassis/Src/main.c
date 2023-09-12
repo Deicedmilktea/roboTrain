@@ -70,7 +70,6 @@ float target_speed[7]={0};//实测最大空载转速320rpm
 float target_speed_can_2[7]={0};//实测最大空载转速320rpm
 moto_info_t motor_info[MOTOR_MAX_NUM];		//赋予最大的7个字节
 moto_info_t motor_info_can_2[MOTOR_MAX_NUM];		//赋予最大的7个字节
-uint8_t tx_data[8] = "Hello";
 	
 uint8_t can_flag=0;
 double step=9158/660; 
@@ -160,14 +159,13 @@ DWT_Init(168);
   MX_FREERTOS_Init();
 
   /* Start scheduler */
-  //osKernelStart();
+  osKernelStart();
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
   while (1)
   {
-		HAL_UART_Transmit_DMA(&huart1,tx_data,sizeof(tx_data)-1);
     /* USER CODE END WHILE */
 		
     /* USER CODE BEGIN 3 */

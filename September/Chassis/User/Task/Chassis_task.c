@@ -17,9 +17,10 @@ volatile int16_t motor_speed_target[4];
  extern ins_data_t ins_data;
  extern float powerdata[4];
  extern uint16_t shift_flag;
+ int flag=0;
 // Save imu data
 
-int8_t chassis_mode = 1;//判断底盘状态，用于UI编写
+int8_t chassis_mode[2] = {0, 0};//判断底盘状态，用于UI编写
 
 //获取imu——Yaw角度差值参数
 static void Get_Err(); 
@@ -33,6 +34,30 @@ void power_limit(int *speed);
 int chassis_mode_flag =0;
 
 void qe();
+
+//speed mapping
+int16_t Speedmapping(int value, int from_min, int from_max, int to_min, int to_max){
+	  // 首先将输入值从 [a, b] 映射到 [0, 1] 范围内
+    double normalized_value = (value*1.0 - from_min) / (from_max - from_min);
+    
+    // 然后将标准化后的值映射到 [C, D] 范围内
+    int16_t mapped_value = (int16_t)(to_min + (to_max - to_min) * normalized_value);
+    
+    return mapped_value;
+}
+
+void Calculate_speed(){
+	Vx=Speedmapping(rc_ctrl.rc.ch[2],-660,660,-1000,1000);// left and right
+	Vy=Speedmapping(rc_ctrl.rc.ch[3],-660,660,-1000,1000);// front and back
+	Wz=Speedmapping(rc_ctrl.rc.ch[0],-660,660,-1000,1000);// rotate
+}
+
+void RC_move(){
+		motor_speed_target[CHAS_LF] =  Vy + Vx - Wz;
+    motor_speed_target[CHAS_RF] =  Vy - Vx + Wz;
+    motor_speed_target[CHAS_RB] =  Vy - Vx - Wz;
+    motor_speed_target[CHAS_LB] =  Vy + Vx + Wz;
+}
 	
 #define angle_valve 5
 #define angle_weight 55
@@ -48,9 +73,13 @@ void qe();
 
   
     for(;;)				//底盘运动任务
-    {     
- 					
-            osDelay(1);
+    {     flag=1;
+				Calculate_speed();
+				RC_move();
+				chassis_current_give();
+				//chassis_current_give();
+					
+        osDelay(1);
 
     }
 
@@ -75,7 +104,7 @@ void chassis_motol_speed_calculate()
 	
 	  motor_speed_target[CHAS_LF] =  0;
     motor_speed_target[CHAS_RF] =  0;
-    motor_speed_target[CHAS_RB] =  0; 
+    motor_speed_target[CHAS_RB] =  0;
     motor_speed_target[CHAS_LB] =  0;
 }
 //运动解算

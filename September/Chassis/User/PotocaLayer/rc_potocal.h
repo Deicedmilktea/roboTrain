@@ -3,7 +3,6 @@
   #include "struct_typedef.h"
   #include "drv_can.h"
   #include "main.h"
-	
 
 void USART3_rxDataHandler(uint8_t *rxBuf);
 
