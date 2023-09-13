@@ -17,10 +17,12 @@ volatile int16_t motor_speed_target[4];
  extern ins_data_t ins_data;
  extern float powerdata[4];
  extern uint16_t shift_flag;
+ 
  int flag=0;
+ double rx=0.2,ry=0.2;
 // Save imu data
 
-int8_t chassis_mode[2] = {0, 0};//判断底盘状态，用于UI编写
+int16_t chassis_mode = 1;//判断底盘状态，用于UI编写
 
 //获取imu——Yaw角度差值参数
 static void Get_Err(); 
@@ -53,10 +55,10 @@ void Calculate_speed(){
 }
 
 void RC_move(){
-		motor_speed_target[CHAS_LF] =  Vy + Vx - Wz;
-    motor_speed_target[CHAS_RF] =  Vy - Vx + Wz;
-    motor_speed_target[CHAS_RB] =  Vy - Vx - Wz;
-    motor_speed_target[CHAS_LB] =  Vy + Vx + Wz;
+		motor_speed_target[CHAS_LF] =  Vy + Vx + 3*Wz*(rx+ry);
+    motor_speed_target[CHAS_RF] = -Vy + Vx + 3*Wz*(rx+ry);
+    motor_speed_target[CHAS_RB] = -Vy - Vx + 3*Wz*(rx+ry);
+    motor_speed_target[CHAS_LB] =  Vy - Vx + 3*Wz*(rx+ry);
 }
 	
 #define angle_valve 5
@@ -74,8 +76,18 @@ void RC_move(){
   
     for(;;)				//底盘运动任务
     {     flag=1;
+				chassis_mode = rc_ctrl.rc.s[0];
 				Calculate_speed();
-				RC_move();
+				if(chassis_mode==1){
+						motor_speed_target[CHAS_LF] =  1000;
+						motor_speed_target[CHAS_RF] =  0;
+						motor_speed_target[CHAS_RB] =  0;
+						motor_speed_target[CHAS_LB] =  0;
+				}
+				if(chassis_mode==2){
+						RC_move();
+					
+				}
 				chassis_current_give();
 				//chassis_current_give();
 					
