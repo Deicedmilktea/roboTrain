@@ -10,11 +10,6 @@
     "files": [],
     "folders": [
       {
-        "name": "::CMSIS",
-        "files": [],
-        "folders": []
-      },
-      {
         "name": "Application",
         "files": [],
         "folders": [
@@ -201,58 +196,16 @@
         ]
       },
       {
-        "name": "Middlewares",
-        "files": [],
-        "folders": [
-          {
-            "name": "FreeRTOS",
-            "files": [
-              {
-                "path": "../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c"
-              },
-              {
-                "path": "../Middlewares/Third_Party/FreeRTOS/Source/croutine.c"
-              },
-              {
-                "path": "../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c"
-              },
-              {
-                "path": "../Middlewares/Third_Party/FreeRTOS/Source/list.c"
-              },
-              {
-                "path": "../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c"
-              },
-              {
-                "path": "../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/port.c"
-              },
-              {
-                "path": "../Middlewares/Third_Party/FreeRTOS/Source/queue.c"
-              },
-              {
-                "path": "../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c"
-              },
-              {
-                "path": "../Middlewares/Third_Party/FreeRTOS/Source/tasks.c"
-              },
-              {
-                "path": "../Middlewares/Third_Party/FreeRTOS/Source/timers.c"
-              }
-            ],
-            "folders": []
-          }
-        ]
-      },
-      {
         "name": "RTOS TASK",
         "files": [
           {
             "path": "../User/Task/Chassis_task.c"
           },
           {
-            "path": "../User/Task/UI_task.c"
+            "path": "EXCHANGE.c"
           },
           {
-            "path": "EXCHANGE.c"
+            "path": "../User/Task/UI_task.c"
           }
         ],
         "folders": []
@@ -280,12 +233,59 @@
           }
         ],
         "folders": []
+      },
+      {
+        "name": "Middlewares",
+        "files": [],
+        "folders": [
+          {
+            "name": "FreeRTOS",
+            "files": [
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/croutine.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/list.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/queue.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/tasks.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/timers.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/port.c"
+              }
+            ],
+            "folders": []
+          }
+        ]
+      },
+      {
+        "name": "::CMSIS",
+        "files": [],
+        "folders": []
       }
     ]
   },
   "outDir": "build",
   "deviceName": null,
-  "packDir": null,
+  "packDir": ".pack/Keil/STM32F4xx_DFP.2.16.0",
   "miscInfo": {
     "uid": "339dd7a139d56c92fe43b912e8c4283c"
   },
@@ -424,6 +424,23 @@
           "proType": 1,
           "speed": 8000,
           "otherCmds": ""
+        },
+        "OpenOCD": {
+          "bin": "",
+          "target": "stm32f4x",
+          "interface": "stlink-v2",
+          "baseAddr": "0x08000000"
+        },
+        "STLink": {
+          "bin": "",
+          "proType": "SWD",
+          "resetMode": "default",
+          "runAfterProgram": true,
+          "speed": 4000,
+          "address": "0x8000000",
+          "elFile": "None",
+          "optionBytes": ".eide/c_board_standard_robot.st.option.bytes.ini",
+          "otherCmds": ""
         }
       },
       "custom_dep": {
@@ -444,9 +461,7 @@
           "../Components/Controller",
           "../Components/Devices",
           "../Components/Algorithm/Include",
-          ".cmsis/include",
-          "RTE/_C_Board_Standard_Robot",
-          ".eide/deps"
+          "RTE/_C_Board_Standard_Robot"
         ],
         "libList": [],
         "sourceDirList": [],
