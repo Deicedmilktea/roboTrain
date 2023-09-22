@@ -1,7 +1,8 @@
---cpu Cortex-M4.fp
+--cpu=Cortex-M4.fp.sp
 "uart\startup_stm32f407xx.o"
 "uart\main.o"
 "uart\gpio.o"
+"uart\dma.o"
 "uart\usart.o"
 "uart\stm32f4xx_it.o"
 "uart\stm32f4xx_hal_msp.o"
@@ -23,6 +24,6 @@
 "uart\stm32f4xx_hal_exti.o"
 "uart\system_stm32f4xx.o"
 --strict --scatter "Uart\Uart.sct"
---summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list "Uart.map" -o Uart\Uart.axf
