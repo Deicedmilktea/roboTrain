@@ -55,28 +55,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-CAN_HandleTypeDef hcan1;
 
-void SendMotorControlCommand(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4) {
-  CAN_TxHeaderTypeDef TxHeader;
-  uint8_t msgData[8];
-
-  TxHeader.StdId = 0x200; 
-  TxHeader.IDE = CAN_ID_STD;
-  TxHeader.RTR = CAN_RTR_DATA;
-  TxHeader.DLC = 8;
-
-  msgData[0] = (motor1 >> 8) & 0xFF; 
-  msgData[1] = motor1 & 0xFF;
-	msgData[2] = (motor2 >> 8) & 0xFF; 
-  msgData[3] = motor2 & 0xFF;
-	msgData[4] = (motor3 >> 8) & 0xFF; 
-  msgData[5] = motor3 & 0xFF;
-	msgData[6] = (motor4 >> 8) & 0xFF; 
-  msgData[7] = motor4 & 0xFF;
-
-  HAL_CAN_AddTxMessage(&hcan1, &TxHeader, msgData, (uint32_t *)CAN_TX_MAILBOX0);
-}
 /* USER CODE END 0 */
 
 /**
@@ -116,11 +95,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    CAN_cmd_chassis(4000, 4000, 4000, 4000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		SendMotorControlCommand(1000,1000,1000,1000);
-		HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }
