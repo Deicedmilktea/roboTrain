@@ -45,7 +45,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint8_t txData[] = "Hello";
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -58,40 +58,40 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 
   uint8_t rxData[10]; // 用于接收数据的缓冲区
+	
+//  //阻塞中断回调函数
+//  void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+//    if (huart == &huart1) {
+//      // 处理接收到的数据
+//      if (rxData[0] == 'a') {
+//        // 点亮LED
+//        HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_SET);
+//      } else if (rxData[0] == 'b') {
+//        // 熄灭LED
+//        HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_RESET);
+//      }
+//      // 启动下一次接收
+//      HAL_UART_Receive_IT(&huart1, rxData, sizeof(rxData));
+//    }
+//  }
 
-  //阻塞中断回调函数
-  void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-    if (huart == &huart2) {
-      // 处理接收到的数据
-      if (huart2.Instance->DR == '1') {
-        // 点亮LED
-        HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_SET);
-      } else if (huart2.Instance->DR == '0') {
-        // 熄灭LED
-        HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_RESET);
-      }
-      // 启动下一次接收
-      HAL_UART_Receive_IT(&huart2, (uint8_t *)&huart2.Instance->DR, 1);
-    }
-  }
-
-  // //DMA回调函数
-  // void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-  //   if (huart == &huart2) {
-  //       // 处理接收到的数据
-  //       if (strcmp((char*)rxData, "1\r\n") == 0) {
-  //           // 点亮LED
-  //           HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_SET);
-  //       }else if (strcmp((char*)rxData, "0\r\n") == 0) {
-  //           // 熄灭LED
-  //           HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_RESET);
-  //       }
-  //       // 清空接收缓冲区
-  //       memset(rxData, 0, sizeof(rxData));
-  //       // 启动下一次DMA接收
-  //       HAL_UART_Receive_DMA(&huart2, rxData, sizeof(rxData));
-  //   }
-  // }
+	 //DMA回调函数
+	 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+		 if (huart == &huart1) {
+				 // 处理接收到的数据
+				 if (rxData[0] == 'a') {
+						 // 点亮LED
+						 HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_SET);
+				 }else if (rxData[0] == 'b') {
+						 // 熄灭LED
+						 HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_RESET);
+				 }
+				 // 清空接收缓冲区
+				 memset(rxData, 0, sizeof(rxData));
+				 // 启动下一次DMA接收
+				 HAL_UART_Receive_DMA(&huart1, rxData, sizeof(rxData));
+		 }
+	 }
 
 /* USER CODE END 0 */
 
@@ -102,7 +102,7 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+		//uint8_t txData[] = "ok";
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -118,15 +118,14 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  MX_DMA_Init();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
-  MX_USART2_UART_Init();
-  /* USER CODE BEGIN 2 */
 
+  MX_USART1_UART_Init();
+  /* USER CODE BEGIN 2 */
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -136,32 +135,36 @@ int main(void)
 
 		/**************************阻断式*************************/
     // 接收数据
-    HAL_UART_Receive(&huart2, rxData, sizeof(rxData), 1000);
-
-    // 检查接收到的数据
-    if (strcmp((char *)rxData, "0\r\n") == 0)
-    {
-      // 如果接收到"0\r\n"，发送"Hello"
-      uint8_t txData[] = "Hello\r\n";
-      HAL_UART_Transmit(&huart2, txData, sizeof(txData), 1000);
-    }
-    else if (strcmp((char *)rxData, "1\r\n") == 0)
-    {
-      // 如果接收到"1\r\n"，发送"World"
-      uint8_t txData[] = "World\r\n";
-      HAL_UART_Transmit(&huart2, txData, sizeof(txData), 1000);
-    }
-
-    // 清空接收缓冲区
-    memset(rxData, 0, sizeof(rxData));
+//		HAL_Delay(100);
+//		HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_SET);
+//    HAL_UART_Receive(&huart1, rxData, sizeof(rxData), 1000);
+//    //HAL_UART_Transmit(&huart1, txData, sizeof(txData), 1000);
+//    // 检查接收到的数据
+//    if (rxData[0] == 'a')
+//    {
+//      // 如果接收到"0"，发送"Hello"
+//      uint8_t txData[] = "Hello";
+//      HAL_UART_Transmit(&huart1, txData, sizeof(txData), 1000);
+//    }
+//    else if (rxData[0] == 'b')
+//    {
+//      // 如果接收到"1"，发送"World"
+//      uint8_t txData[] = "World";
+//      HAL_UART_Transmit(&huart1, txData, sizeof(txData), 1000);
+//    }
+//    // 清空接收缓冲区
+//		HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_RESET);
+//		//HAL_Delay(100);
+//    memset(rxData, 0, sizeof(rxData));
+//		HAL_Delay(100);
 
 
     /****************************阻塞式************************/
-    //HAL_UART_Receive_IT(&huart2, (uint8_t *)&huart2.Instance->DR, 1);
+    //HAL_UART_Receive_IT(&huart1, rxData, sizeof(rxData));
 
 
     /****************************DMA****************************/
-    //HAL_UART_Receive_DMA(&huart2, rxData, sizeof(rxData));
+    HAL_UART_Receive_DMA(&huart1, rxData, sizeof(rxData));
 
 
     /* USER CODE END WHILE */

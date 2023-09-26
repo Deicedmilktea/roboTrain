@@ -35,22 +35,19 @@
                 "name": "Core",
                 "files": [
                   {
-                    "path": "../Core/Src/dma.c"
+                    "path": "../Core/Src/main.c"
                   },
                   {
                     "path": "../Core/Src/gpio.c"
                   },
                   {
-                    "path": "../Core/Src/main.c"
-                  },
-                  {
-                    "path": "../Core/Src/stm32f4xx_hal_msp.c"
+                    "path": "../Core/Src/usart.c"
                   },
                   {
                     "path": "../Core/Src/stm32f4xx_it.c"
                   },
                   {
-                    "path": "../Core/Src/usart.c"
+                    "path": "../Core/Src/stm32f4xx_hal_msp.c"
                   }
                 ],
                 "folders": []
@@ -63,15 +60,6 @@
         "name": "Drivers",
         "files": [],
         "folders": [
-          {
-            "name": "CMSIS",
-            "files": [
-              {
-                "path": "../Core/Src/system_stm32f4xx.c"
-              }
-            ],
-            "folders": []
-          },
           {
             "name": "STM32F4xx_HAL_Driver",
             "files": [
@@ -122,6 +110,15 @@
               },
               {
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c"
+              }
+            ],
+            "folders": []
+          },
+          {
+            "name": "CMSIS",
+            "files": [
+              {
+                "path": "../Core/Src/system_stm32f4xx.c"
               }
             ],
             "folders": []
@@ -274,9 +271,7 @@
           "../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy",
           "../Drivers/CMSIS/Device/ST/STM32F4xx/Include",
           "../Drivers/CMSIS/Include",
-          ".cmsis/include",
-          "RTE/_Uart",
-          ".eide/deps"
+          "RTE/_Uart"
         ],
         "libList": [],
         "sourceDirList": [],
