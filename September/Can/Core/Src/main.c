@@ -55,7 +55,8 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int error1 = 0;
+int error2 = 0;
 /* USER CODE END 0 */
 
 /**
@@ -65,7 +66,7 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -88,8 +89,7 @@ int main(void)
   MX_GPIO_Init();
   MX_CAN1_Init();
   /* USER CODE BEGIN 2 */
-
-	can_filter_init();
+//	can_filter_init();
 	
   /* USER CODE END 2 */
 
@@ -97,11 +97,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		CAN_cmd_chassis(1000, 1000, 1000, 1000);
-		HAL_Delay(100);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		error1++;
+		CAN_cmd_chassis(1000, 1000, 1000, 1000);
+		HAL_Delay(100);
+		error2++;
   }
   /* USER CODE END 3 */
 }

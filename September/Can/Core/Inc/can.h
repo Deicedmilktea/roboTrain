@@ -45,7 +45,7 @@ typedef enum
     CAN_3508_M4_ID = 0x204,
 } can_msg_id_e;
 
-void CAN_cmd_chassis(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4);
+void CAN_cmd_chassis(int motor1, int motor2, int motor3, int motor4);
 
 void can_filter_init(void);
 
