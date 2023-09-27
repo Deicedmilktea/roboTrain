@@ -47,6 +47,8 @@ typedef enum
 
 void CAN_cmd_chassis(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4);
 
+void can_filter_init(void);
+
 /* USER CODE END Private defines */
 
 void MX_CAN1_Init(void);
