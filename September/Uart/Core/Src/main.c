@@ -59,7 +59,7 @@ void SystemClock_Config(void);
 
   uint8_t rxData[10]; // 用于接收数据的缓冲区
 	
-//  //阻塞中断回调函数
+//  //中断回调函数
 //  void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 //    if (huart == &huart1) {
 //      // 处理接收到的数据
@@ -133,7 +133,7 @@ int main(void)
   while (1)
   {
 
-		/**************************阻断式*************************/
+		/**************************阻塞式*************************/
     // 接收数据
 //		HAL_Delay(100);
 //		HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_SET);
@@ -159,7 +159,7 @@ int main(void)
 //		HAL_Delay(100);
 
 
-    /****************************阻塞式************************/
+    /****************************中断式************************/
     //HAL_UART_Receive_IT(&huart1, rxData, sizeof(rxData));
 
 

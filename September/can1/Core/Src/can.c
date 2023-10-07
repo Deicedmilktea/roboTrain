@@ -24,7 +24,6 @@
 
 static CAN_TxHeaderTypeDef  chassis_tx_message;
 static uint8_t              chassis_can_send_data[8];
-int error=0;
 
 /* USER CODE END 0 */
 
@@ -143,7 +142,7 @@ void can_filter_init(void)
 void CAN_cmd_chassis(int motor1, int motor2, int motor3, int motor4)
 {
     uint32_t send_mail_box;
-    chassis_tx_message.StdId = 0x200; //CAN_CHASSIS_ALL_ID;
+    chassis_tx_message.StdId = 0x200;
     chassis_tx_message.IDE = CAN_ID_STD;
     chassis_tx_message.RTR = CAN_RTR_DATA;
     chassis_tx_message.DLC = 0x08;
@@ -156,10 +155,7 @@ void CAN_cmd_chassis(int motor1, int motor2, int motor3, int motor4)
     chassis_can_send_data[6] = (motor4 >> 8) & 0xff;
     chassis_can_send_data[7] = motor4 & 0xff;
 
-    if(HAL_CAN_AddTxMessage(&hcan1, &chassis_tx_message, chassis_can_send_data, &send_mail_box)==HAL_OK)
-		{
-			error++;
-		}
+    HAL_CAN_AddTxMessage(&hcan1, &chassis_tx_message, chassis_can_send_data, &send_mail_box);
 }
 
 /* USER CODE END 1 */

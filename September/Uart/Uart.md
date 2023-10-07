@@ -24,7 +24,7 @@
 
 * 使用中断uart的方式接收串口助手的数据并使用串口助手点灯
   ```C++
-  //阻塞中断回调函数
+  //中断回调函数
   void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     if (huart == &huart2) {
       // 处理接收到的数据
