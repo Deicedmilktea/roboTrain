@@ -11,8 +11,8 @@
                 "d:\\RoboMaster\\Train\\roboTrain\\October\\PID_Shoot\\Middlewares\\Third_Party\\FreeRTOS\\Source\\portable\\RVDS\\ARM_CM4F",
                 "d:\\RoboMaster\\Train\\roboTrain\\October\\PID_Shoot\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include",
                 "d:\\RoboMaster\\Train\\roboTrain\\October\\PID_Shoot\\Drivers\\CMSIS\\Include",
-                "d:\\RoboMaster\\Train\\roboTrain\\October\\PID_Shoot\\MDK-ARM",
                 "d:\\RoboMaster\\Train\\roboTrain\\October\\PID_Shoot\\Core\\Src",
+                "d:\\RoboMaster\\Train\\roboTrain\\October\\PID_Shoot\\MDK-ARM",
                 "d:\\RoboMaster\\Train\\roboTrain\\October\\PID_Shoot\\Drivers\\STM32F4xx_HAL_Driver\\Src",
                 "d:\\RoboMaster\\Train\\roboTrain\\October\\PID_Shoot\\Middlewares\\Third_Party\\FreeRTOS\\Source",
                 "d:\\RoboMaster\\Train\\roboTrain\\October\\PID_Shoot\\Middlewares\\Third_Party\\FreeRTOS\\Source\\portable\\MemMang"

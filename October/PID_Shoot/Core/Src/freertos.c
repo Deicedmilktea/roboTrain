@@ -22,12 +22,12 @@
 #include "task.h"
 #include "main.h"
 #include "cmsis_os.h"
-#include "can.h"
-#include "can_receive.h"
-#include "pid.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
+#include "can_receive.h"
+#include "pid.h"
 
 /* USER CODE END Includes */
 
@@ -133,22 +133,25 @@ void MX_FREERTOS_Init(void) {
   * @retval None
   */
 /* USER CODE END Header_Bullet_shoot_Task */
-__weak void Bullet_shoot_Task(void const * argument)
+void Bullet_shoot_Task(void const * argument)
 {
   /* USER CODE BEGIN Bullet_shoot_Task */
 
     PID friction_pid;
-
+    static float tar_left_speed = 500;
+    static float tar_right_speed = 500;
+		static float curr_left_speed = 0;
+		static float curr_right_speed = 0;
   /* Infinite loop */
   for(;;)
   {
-    float tar_left_speed = 500;
-    float tar_right_speed = 500;
-    float pid_init(friction_pid, 100, 3, 1);
-    CAN_cmd_friction(tar_left_speed, tar_right_speed);
+		HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_SET);
+    pid_init(friction_pid, 10, 3, 1);
+		//CAN_cmd_friction(500, 500);
+    CAN_cmd_friction(curr_left_speed, curr_right_speed);
     HAL_CAN_RxFifo0MsgPendingCallback(&hcan2);
-    tar_left_speed = pid_calc(friction_pid, motor[1], tar_left_speed);
-    tar_right_speed = pid_calc(friction_pid, motor[2], tar_right_speed);
+    curr_left_speed = pid_calc(friction_pid, motor[1], tar_left_speed);
+    curr_right_speed = pid_calc(friction_pid, motor[2], tar_right_speed);
     osDelay(1);
   }
   /* USER CODE END Bullet_shoot_Task */
@@ -161,7 +164,7 @@ __weak void Bullet_shoot_Task(void const * argument)
 * @retval None
 */
 /* USER CODE END Header_Bullet_rotate_Task */
-__weak void Bullet_rotate_Task(void const * argument)
+void Bullet_rotate_Task(void const * argument)
 {
   /* USER CODE BEGIN Bullet_rotate_Task */
   /* Infinite loop */
@@ -179,7 +182,7 @@ __weak void Bullet_rotate_Task(void const * argument)
 * @retval None
 */
 /* USER CODE END Header_Gimbal_Task */
-__weak void Gimbal_Task(void const * argument)
+void Gimbal_Task(void const * argument)
 {
   /* USER CODE BEGIN Gimbal_Task */
   /* Infinite loop */

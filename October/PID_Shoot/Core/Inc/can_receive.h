@@ -1,6 +1,8 @@
 #ifndef __CAN_RECEIVE_H__
 #define __CAN_RECEIVE_H__
 
+#include "main.h"
+#include "can.h"
 
 typedef struct
 {
@@ -9,7 +11,12 @@ typedef struct
     int16_t given_current;
     uint8_t temperate;
     int16_t last_ecd;
-} motor_measure_t;
+}motor_measure_t;
+
+
+//1: trigger motor; 2: left friction; 3: right friction; 4: gimbal motor
+static motor_measure_t motor[4];
+
 
 void can_filter_init(void);
 

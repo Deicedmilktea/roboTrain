@@ -1,6 +1,8 @@
 #ifndef PID_H
 #define PID_H
 
+#include "can_receive.h"
+
 typedef struct
 {
 	float target_val;   //目标值
@@ -11,9 +13,9 @@ typedef struct
 	float output_val;   //输出值
 }PID;
 
-void pid_init(PID *pid, float Kp, float Ki, float Kd);
+void pid_init(PID pid, float kp, float ki, float kd);
 
-float pid_calc(PID *pid, motor_measure_t motor, float tar_val);
+float pid_calc(PID pid, motor_measure_t Motor, float tar_val);
 
 
 #endif
