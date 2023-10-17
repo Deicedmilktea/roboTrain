@@ -23,6 +23,8 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "can.h"
+#include "can_receive.h"
+#include "pid.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -134,9 +136,19 @@ void MX_FREERTOS_Init(void) {
 __weak void Bullet_shoot_Task(void const * argument)
 {
   /* USER CODE BEGIN Bullet_shoot_Task */
+
+    PID friction_pid;
+
   /* Infinite loop */
   for(;;)
   {
+    float tar_left_speed = 500;
+    float tar_right_speed = 500;
+    float pid_init(friction_pid, 100, 3, 1);
+    CAN_cmd_friction(tar_left_speed, tar_right_speed);
+    HAL_CAN_RxFifo0MsgPendingCallback(&hcan2);
+    tar_left_speed = pid_calc(friction_pid, motor[1], tar_left_speed);
+    tar_right_speed = pid_calc(friction_pid, motor[2], tar_right_speed);
     osDelay(1);
   }
   /* USER CODE END Bullet_shoot_Task */

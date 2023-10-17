@@ -22,17 +22,7 @@
 
 /* USER CODE BEGIN 0 */
 
-static motor_measure_t motor[4];
 
-//motor data read
-#define get_motor_measure(ptr, data)                                    \
-    {                                                                   \
-        (ptr)->last_ecd = (ptr)->ecd;                                   \
-        (ptr)->ecd = (uint16_t)((data)[0] << 8 | (data)[1]);            \
-        (ptr)->speed_rpm = (uint16_t)((data)[2] << 8 | (data)[3]);      \
-        (ptr)->given_current = (uint16_t)((data)[4] << 8 | (data)[5]);  \
-        (ptr)->temperate = (data)[6];                                   \
-    }
 
 /* USER CODE END 0 */
 
@@ -136,33 +126,6 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 
 /* USER CODE BEGIN 1 */
 
-void can_filter_init(void)
-{
- 	CAN_FilterTypeDef can_filter;
-	can_filter.FilterBank = 0;
-	can_filter.FilterMode = CAN_FILTERMODE_IDMASK;
-	can_filter.FilterScale = CAN_FILTERSCALE_32BIT;
-	can_filter.FilterIdHigh = 0;
-	can_filter.FilterIdLow = 0;
-	can_filter.FilterMaskIdHigh = 0;
-	can_filter.FilterMaskIdLow = 0;
-	can_filter.FilterFIFOAssignment = CAN_RX_FIFO0;
-	can_filter.SlaveStartFilterBank = 14;
-	HAL_CAN_ConfigFilter(&hcan2,&can_filter);
-	HAL_CAN_ActivateNotification(&hcan2,CAN_IT_RX_FIFO0_MSG_PENDING);
-	HAL_CAN_Start(&hcan2);
-}
 
-void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
-{
-    CAN_RxHeaderTypeDef rx_header;
-    uint8_t rx_data[8];
-
-    HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
-    
-    i = rx_header.StdId - 0x205;
-    get_motor_measure(&motor[i], rx_data);
-    
-}
 
 /* USER CODE END 1 */

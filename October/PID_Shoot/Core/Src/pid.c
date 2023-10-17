@@ -1,14 +1,17 @@
 #include "pid.h"
 
-float pid_init(PID *pid, float kp, float ki, float kd)
+float pid_init(PID pid, float kp, float ki, float kd)
 {
     pid.Kp = kp;
     pid.Ki = ki;
     pid.Kd = kd;
 }
 
-float pid_calculate(PID *pid, float actual_val, float tar_val)
+float pid_calc(PID pid, motor_measure_t motor, float tar_val)
 {
+	/*读取电机目前速度*/
+	float actual_val = motor.speed_rpm;
+
     /*计算目标值与实际值的误差*/
 	pid.err = pid.target_val - actual_val;
 	
