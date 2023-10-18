@@ -7,23 +7,22 @@ void pid_init(PID pid, float kp, float ki, float kd)
     pid.Kd = kd;
 }
 
-float pid_calc(PID pid, motor_measure_t Motor, float tar_val)
+float pid_calc(PID pid, float actual_val, float tar_val)
 {
-	/*读取电机目前速度*/
-	float actual_val = Motor.speed_rpm;
+    /* 计算目标值与实际值的误差 */
+    pid.err = tar_val - actual_val;
+    
+    /* 积分项限幅处理 */
+    if (pid.integral < 1000 && pid.integral > -1000) {
+        pid.integral += pid.err * 0.5;
+    }
+    
+    /* PID算法实现 */
+    pid.output_val = pid.Kp * pid.err + pid.Ki * pid.integral + pid.Kd * ((pid.err - pid.err_last) / 0.5);
+    
+    /* 误差传递 */
+    pid.err_last = pid.err;
 
-    /*计算目标值与实际值的误差*/
-	pid.err = pid.target_val - actual_val;
-	
-	/*积分项*/
-	pid.integral += pid.err;
-
-	/*PID算法实现*/
-	pid.output_val = pid.Kp * pid.err + pid.Ki * pid.integral + pid.Kd * (pid.err - pid.err_last);
-
-	/*误差传递*/
-	pid.err_last = pid.err;
-
-	/*返回当前实际值*/
-	return pid.output_val;
+    /* 返回当前实际值 */
+    return pid.output_val;
 }

@@ -138,20 +138,19 @@ void Bullet_shoot_Task(void const * argument)
   /* USER CODE BEGIN Bullet_shoot_Task */
 
     PID friction_pid;
-    static float tar_left_speed = 500;
-    static float tar_right_speed = 500;
-		static float curr_left_speed = 0;
-		static float curr_right_speed = 0;
+		//static float curr_left_speed = 500;
+		//static float curr_right_speed = 500;
   /* Infinite loop */
   for(;;)
   {
 		HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_SET);
-    pid_init(friction_pid, 10, 3, 1);
+    pid_init(friction_pid, 2, 3, 1);
 		//CAN_cmd_friction(500, 500);
-    CAN_cmd_friction(curr_left_speed, curr_right_speed);
+    CAN_cmd_friction(cur_friction_speed, cur_friction_speed);
     HAL_CAN_RxFifo0MsgPendingCallback(&hcan2);
-    curr_left_speed = pid_calc(friction_pid, motor[1], tar_left_speed);
-    curr_right_speed = pid_calc(friction_pid, motor[2], tar_right_speed);
+		cur_friction_speed = motor[1].speed_rpm;
+    cur_friction_speed = pid_calc(friction_pid, cur_friction_speed, tar_friction_speed);
+    //curr_right_speed = pid_calc(friction_pid, motor[2], tar_right_speed);
     osDelay(1);
   }
   /* USER CODE END Bullet_shoot_Task */

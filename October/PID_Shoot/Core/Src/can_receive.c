@@ -3,7 +3,6 @@
 static CAN_TxHeaderTypeDef  gimbal_tx_message;
 static uint8_t              gimbal_can_send_data[8];
 
-
 //motor data read
 #define get_motor_measure(ptr, data)                                    \
     {                                                                   \
@@ -15,7 +14,7 @@ static uint8_t              gimbal_can_send_data[8];
     }
 
 //initial can_filter
-void can_filter_init(void)
+void can1_filter_init(void)
 {
  	CAN_FilterTypeDef can_filter;
 	can_filter.FilterBank = 0;
@@ -27,6 +26,25 @@ void can_filter_init(void)
 	can_filter.FilterMaskIdLow = 0;
 	can_filter.FilterFIFOAssignment = CAN_RX_FIFO0;
 	can_filter.SlaveStartFilterBank = 14;
+	can_filter.FilterActivation = ENABLE;
+	HAL_CAN_ConfigFilter(&hcan1,&can_filter);
+	HAL_CAN_ActivateNotification(&hcan1,CAN_IT_RX_FIFO0_MSG_PENDING);
+	HAL_CAN_Start(&hcan1);
+}
+
+void can2_filter_init(void)
+{
+ 	CAN_FilterTypeDef can_filter;
+	can_filter.FilterBank = 14;
+	can_filter.FilterMode = CAN_FILTERMODE_IDMASK;
+	can_filter.FilterScale = CAN_FILTERSCALE_32BIT;
+	can_filter.FilterIdHigh = 0;
+	can_filter.FilterIdLow = 0;
+	can_filter.FilterMaskIdHigh = 0;
+	can_filter.FilterMaskIdLow = 0;
+	can_filter.FilterFIFOAssignment = CAN_RX_FIFO0;
+	can_filter.SlaveStartFilterBank = 14;
+	can_filter.FilterActivation = ENABLE;
 	HAL_CAN_ConfigFilter(&hcan2,&can_filter);
 	HAL_CAN_ActivateNotification(&hcan2,CAN_IT_RX_FIFO0_MSG_PENDING);
 	HAL_CAN_Start(&hcan2);
@@ -40,9 +58,34 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 
     HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
     
-    static uint8_t i = 0;
-    i = rx_header.StdId - 0x201;
-    get_motor_measure(&motor[i], rx_data);
+//    static uint8_t i ;
+//    i = rx_header.StdId - 0x201;
+//    get_motor_measure(&motor[i], rx_data);
+		
+	
+		switch (rx_header.StdId)
+    {
+        case 0x201:
+        case 0x202:
+        case 0x203:
+        case 0x204:
+//        case CAN_YAW_MOTOR_ID:
+//        case CAN_PIT_MOTOR_ID:
+//        case CAN_TRIGGER_MOTOR_ID:
+        {
+            uint8_t i = 0;
+            //get motor id
+            i = rx_header.StdId - 0x201;
+            get_motor_measure(&motor[i], rx_data);
+            //detect_hook(CHASSIS_MOTOR1_TOE + i);
+            break;
+        }
+
+        default:
+        {
+            break;
+        }
+    }
 }
 
 //send friction can message

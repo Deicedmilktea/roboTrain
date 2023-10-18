@@ -91,9 +91,11 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_CAN2_Init();
+  MX_CAN1_Init();
   /* USER CODE BEGIN 2 */
 
-	can_filter_init();
+	can1_filter_init();
+	can2_filter_init();
 
   /* USER CODE END 2 */
 
@@ -108,8 +110,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_SET);
-		CAN_cmd_friction(500, 500);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

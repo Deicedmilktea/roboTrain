@@ -15,7 +15,7 @@ typedef struct
 
 void pid_init(PID pid, float kp, float ki, float kd);
 
-float pid_calc(PID pid, motor_measure_t Motor, float tar_val);
+float pid_calc(PID pid, float actual_val, float tar_val);
 
 
 #endif

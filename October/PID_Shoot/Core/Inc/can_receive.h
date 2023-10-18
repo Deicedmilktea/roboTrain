@@ -4,6 +4,9 @@
 #include "main.h"
 #include "can.h"
 
+static float tar_friction_speed = 500;
+static float cur_friction_speed = 500;
+
 typedef struct
 {
     uint16_t ecd;
@@ -18,7 +21,8 @@ typedef struct
 static motor_measure_t motor[4];
 
 
-void can_filter_init(void);
+void can1_filter_init(void);
+void can2_filter_init(void);
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan);
 
