@@ -2,6 +2,15 @@
 
 static CAN_TxHeaderTypeDef  gimbal_tx_message;
 static uint8_t              gimbal_can_send_data[8];
+int ERROR1 = 0;
+
+//1: trigger motor; 2: left friction; 3: right friction; 4: gimbal motor
+motor_measure_t motor[4];
+
+float tar_left_fric_speed = 500;
+float tar_right_fric_speed = 500;
+float cur_left_fric_speed = 0;
+float cur_right_fric_speed = 0;
 
 //motor data read
 #define get_motor_measure(ptr, data)                                    \
@@ -55,14 +64,13 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
     CAN_RxHeaderTypeDef rx_header;
     uint8_t rx_data[8];
-
+		ERROR1++;
     HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
     
 //    static uint8_t i ;
 //    i = rx_header.StdId - 0x201;
 //    get_motor_measure(&motor[i], rx_data);
 		
-	
 		switch (rx_header.StdId)
     {
         case 0x201:

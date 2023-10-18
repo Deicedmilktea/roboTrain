@@ -4,8 +4,6 @@
 #include "main.h"
 #include "can.h"
 
-static float tar_friction_speed = 500;
-static float cur_friction_speed = 500;
 
 typedef struct
 {
@@ -17,8 +15,6 @@ typedef struct
 }motor_measure_t;
 
 
-//1: trigger motor; 2: left friction; 3: right friction; 4: gimbal motor
-static motor_measure_t motor[4];
 
 
 void can1_filter_init(void);

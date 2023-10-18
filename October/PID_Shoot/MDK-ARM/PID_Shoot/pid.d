@@ -1,6 +1,5 @@
 pid_shoot\pid.o: ..\Core\Src\pid.c
-pid_shoot\pid.o: ../Core/Inc/pid.h
-pid_shoot\pid.o: ../Core/Inc/can_receive.h
+pid_shoot\pid.o: ../Core/Inc/PID.h
 pid_shoot\pid.o: ../Core/Inc/main.h
 pid_shoot\pid.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 pid_shoot\pid.o: ../Core/Inc/stm32f4xx_hal_conf.h
@@ -33,4 +32,3 @@ pid_shoot\pid.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 pid_shoot\pid.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 pid_shoot\pid.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 pid_shoot\pid.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
-pid_shoot\pid.o: ../Core/Inc/can.h

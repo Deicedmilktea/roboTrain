@@ -62,6 +62,24 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN Private defines */
 
+typedef struct _pid_struct_t
+{
+  float kp;
+  float ki;
+  float kd;
+  float i_max;
+  float out_max;
+  
+  float ref;      // target value
+  float fdb;      // feedback value  
+  float err[2];   // error and last error
+
+  float p_out;
+  float i_out;
+  float d_out;
+  float output;
+}pid_struct_t;
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

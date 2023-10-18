@@ -49,6 +49,12 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 
+extern motor_measure_t motor[4];
+extern float tar_left_fric_speed;
+extern float tar_right_fric_speed;
+extern float cur_left_fric_speed;
+extern float cur_right_fric_speed;
+
 /* USER CODE END Variables */
 osThreadId Bullet_shootHandle;
 osThreadId Bullet_rotateHandle;
@@ -137,19 +143,20 @@ void Bullet_shoot_Task(void const * argument)
 {
   /* USER CODE BEGIN Bullet_shoot_Task */
 
-    PID friction_pid;
+    pid_struct_t friction_pid;
 		//static float curr_left_speed = 500;
 		//static float curr_right_speed = 500;
   /* Infinite loop */
   for(;;)
   {
 		HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_SET);
-    pid_init(friction_pid, 2, 3, 1);
+    pid_init(&friction_pid, 1, 2, 1, 1000, 500);
 		//CAN_cmd_friction(500, 500);
-    CAN_cmd_friction(cur_friction_speed, cur_friction_speed);
-    HAL_CAN_RxFifo0MsgPendingCallback(&hcan2);
-		cur_friction_speed = motor[1].speed_rpm;
-    cur_friction_speed = pid_calc(friction_pid, cur_friction_speed, tar_friction_speed);
+    CAN_cmd_friction(cur_left_fric_speed, -cur_right_fric_speed);
+		cur_left_fric_speed = motor[1].speed_rpm;
+    cur_left_fric_speed = pid_calc(&friction_pid, tar_left_fric_speed, cur_left_fric_speed);
+		cur_right_fric_speed = motor[2].speed_rpm;
+    cur_right_fric_speed = pid_calc(&friction_pid, tar_right_fric_speed, cur_right_fric_speed);
     //curr_right_speed = pid_calc(friction_pid, motor[2], tar_right_speed);
     osDelay(1);
   }
