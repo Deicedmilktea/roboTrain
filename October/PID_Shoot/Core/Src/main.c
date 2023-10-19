@@ -90,10 +90,9 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-	MX_CAN1_Init();
-	can1_filter_init();
   MX_CAN2_Init();
-  
+	can1_filter_init();
+  MX_CAN1_Init();
   /* USER CODE BEGIN 2 */
 
 	

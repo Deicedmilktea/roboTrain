@@ -439,6 +439,11 @@
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f4xx_hal_timebase_tim.c</FilePath>
             </File>
+            <File>
+              <FileName>Free_tasks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\Free_tasks.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

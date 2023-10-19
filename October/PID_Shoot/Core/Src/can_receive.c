@@ -7,10 +7,6 @@ int ERROR1 = 0;
 //1: trigger motor; 2: left friction; 3: right friction; 4: gimbal motor
 motor_measure_t motor[4];
 
-float tar_left_fric_speed = 500;
-float tar_right_fric_speed = 500;
-float cur_left_fric_speed = 0;
-float cur_right_fric_speed = 0;
 
 //motor data read
 #define get_motor_measure(ptr, data)                                    \
@@ -66,10 +62,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
     uint8_t rx_data[8];
 		ERROR1++;
     HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
-    
-//    static uint8_t i ;
-//    i = rx_header.StdId - 0x201;
-//    get_motor_measure(&motor[i], rx_data);
+   
 		
 		switch (rx_header.StdId)
     {
@@ -77,9 +70,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
         case 0x202:
         case 0x203:
         case 0x204:
-//        case CAN_YAW_MOTOR_ID:
-//        case CAN_PIT_MOTOR_ID:
-//        case CAN_TRIGGER_MOTOR_ID:
         {
             uint8_t i = 0;
             //get motor id
@@ -108,5 +98,29 @@ void CAN_cmd_friction(int16_t left_friction, int16_t right_friction)
     gimbal_can_send_data[3] = left_friction;
     gimbal_can_send_data[4] = (right_friction >> 8);
     gimbal_can_send_data[5] = right_friction;
+    HAL_CAN_AddTxMessage(&hcan2, &gimbal_tx_message, gimbal_can_send_data, &send_mail_box);
+}
+
+void CAN_cmd_trigger(int16_t trigger_speed)
+{
+		uint32_t send_mail_box;
+    gimbal_tx_message.StdId = 0x200;
+    gimbal_tx_message.IDE = CAN_ID_STD;
+    gimbal_tx_message.RTR = CAN_RTR_DATA;
+    gimbal_tx_message.DLC = 0x08;
+		gimbal_can_send_data[0] = (trigger_speed >> 8);
+    gimbal_can_send_data[1] = trigger_speed;
+    HAL_CAN_AddTxMessage(&hcan2, &gimbal_tx_message, gimbal_can_send_data, &send_mail_box);
+}
+
+void CAN_cmd_gimbal(int16_t gimbal_speed)
+{
+		uint32_t send_mail_box;
+    gimbal_tx_message.StdId = 0x1FF;
+    gimbal_tx_message.IDE = CAN_ID_STD;
+    gimbal_tx_message.RTR = CAN_RTR_DATA;
+    gimbal_tx_message.DLC = 0x08;
+    gimbal_can_send_data[2] = (gimbal_speed >> 8);
+    gimbal_can_send_data[3] = gimbal_speed;
     HAL_CAN_AddTxMessage(&hcan2, &gimbal_tx_message, gimbal_can_send_data, &send_mail_box);
 }

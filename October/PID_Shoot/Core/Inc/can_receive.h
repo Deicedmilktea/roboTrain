@@ -24,4 +24,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan);
 
 void CAN_cmd_friction(int16_t left_friction, int16_t right_friction);
 
+void CAN_cmd_trigger(int16_t trigger_speed);
+
+void CAN_cmd_gimbal(int16_t gimbal_speed);
+
 #endif

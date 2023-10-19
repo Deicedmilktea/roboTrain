@@ -26,9 +26,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
-#include "can_receive.h"
-#include "pid.h"
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,12 +45,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-
-extern motor_measure_t motor[4];
-extern float tar_left_fric_speed;
-extern float tar_right_fric_speed;
-extern float cur_left_fric_speed;
-extern float cur_right_fric_speed;
 
 /* USER CODE END Variables */
 osThreadId Bullet_shootHandle;
@@ -139,25 +130,12 @@ void MX_FREERTOS_Init(void) {
   * @retval None
   */
 /* USER CODE END Header_Bullet_shoot_Task */
-void Bullet_shoot_Task(void const * argument)
+__weak void Bullet_shoot_Task(void const * argument)
 {
   /* USER CODE BEGIN Bullet_shoot_Task */
-
-    pid_struct_t friction_pid;
-		//static float curr_left_speed = 500;
-		//static float curr_right_speed = 500;
   /* Infinite loop */
   for(;;)
   {
-		HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_SET);
-    pid_init(&friction_pid, 1, 2, 1, 1000, 500);
-		//CAN_cmd_friction(500, 500);
-    CAN_cmd_friction(cur_left_fric_speed, -cur_right_fric_speed);
-		cur_left_fric_speed = motor[1].speed_rpm;
-    cur_left_fric_speed = pid_calc(&friction_pid, tar_left_fric_speed, cur_left_fric_speed);
-		cur_right_fric_speed = motor[2].speed_rpm;
-    cur_right_fric_speed = pid_calc(&friction_pid, tar_right_fric_speed, cur_right_fric_speed);
-    //curr_right_speed = pid_calc(friction_pid, motor[2], tar_right_speed);
     osDelay(1);
   }
   /* USER CODE END Bullet_shoot_Task */
@@ -170,7 +148,7 @@ void Bullet_shoot_Task(void const * argument)
 * @retval None
 */
 /* USER CODE END Header_Bullet_rotate_Task */
-void Bullet_rotate_Task(void const * argument)
+__weak void Bullet_rotate_Task(void const * argument)
 {
   /* USER CODE BEGIN Bullet_rotate_Task */
   /* Infinite loop */
@@ -188,7 +166,7 @@ void Bullet_rotate_Task(void const * argument)
 * @retval None
 */
 /* USER CODE END Header_Gimbal_Task */
-void Gimbal_Task(void const * argument)
+__weak void Gimbal_Task(void const * argument)
 {
   /* USER CODE BEGIN Gimbal_Task */
   /* Infinite loop */

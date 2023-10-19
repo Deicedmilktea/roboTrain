@@ -35,5 +35,5 @@ float pid_calc(pid_struct_t *pid, float ref, float fdb)//ref是目标值,fdb是�
   
   pid->output = pid->p_out + pid->i_out + pid->d_out;
   LimitMax(pid->output, pid->out_max);//防止越界
-  return pid->output;//电机返回的报文有转速和转矩电流，但是只能发电压值(-30000至30000)，有点抽象这个PID
+  return pid->output;//电机返回的报文有转速和转矩电流，但是只能发电压值(-30000至30000)
 }
