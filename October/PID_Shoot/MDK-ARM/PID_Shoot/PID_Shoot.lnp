@@ -9,6 +9,7 @@
 "pid_shoot\stm32f4xx_it.o"
 "pid_shoot\stm32f4xx_hal_msp.o"
 "pid_shoot\stm32f4xx_hal_timebase_tim.o"
+"pid_shoot\free_tasks.o"
 "pid_shoot\stm32f4xx_hal_can.o"
 "pid_shoot\stm32f4xx_hal_rcc.o"
 "pid_shoot\stm32f4xx_hal_rcc_ex.o"

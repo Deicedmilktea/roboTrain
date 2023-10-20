@@ -22,8 +22,8 @@ void pid_init(pid_struct_t *pid, float kp, float ki, float kd, float i_max, floa
 }
 
 float pid_calc(pid_struct_t *pid, float ref, float fdb)//ref是目标值,fdb是电机解码的速度返回值
-{
-  pid->ref = ref;
+{	
+	pid->ref = ref;
   pid->fdb = fdb;
   pid->err[1] = pid->err[0];//err[1]是上一次计算出来的差值
   pid->err[0] = pid->ref - pid->fdb;//err[0]是这一次的预期速度和实际速度的差值,这两个值是可以是负数的

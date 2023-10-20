@@ -22,21 +22,27 @@ Dialog DLL:      TCM.DLL V1.56.4.0
  
 <h2>Project:</h2>
 D:\RoboMaster\Train\roboTrain\October\PID_Shoot\MDK-ARM\PID_Shoot.uvprojx
-Project File Date:  10/18/2023
+Project File Date:  10/19/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\Software\MDK keil\ARM\ARM_Compiler_5.06u7\Bin'
 Build target 'PID_Shoot'
-compiling freertos.c...
-../Core/Inc/can_receive.h(27): warning:  #1-D: last line of file ends without a newline
+compiling can_receive.c...
+../Core/Inc/can_receive.h(31): warning:  #1-D: last line of file ends without a newline
   #endif
-../Core/Inc/pid.h(15): warning:  #1-D: last line of file ends without a newline
+..\Core\Src\can_receive.c(126): warning:  #1-D: last line of file ends without a newline
+  }
+..\Core\Src\can_receive.c: 2 warnings, 0 errors
+compiling Free_tasks.c...
+../Core/Inc/can_receive.h(31): warning:  #1-D: last line of file ends without a newline
   #endif
-../Core/Src/freertos.c: 2 warnings, 0 errors
+../Core/Inc/pid.h(13): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\Free_tasks.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=10140 RO-data=572 RW-data=164 ZI-data=18044  
+Program Size: Code=10308 RO-data=572 RW-data=184 ZI-data=18048  
 FromELF: creating hex file...
-"PID_Shoot\PID_Shoot.axf" - 0 Error(s), 2 Warning(s).
+"PID_Shoot\PID_Shoot.axf" - 0 Error(s), 4 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -60,7 +66,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS/Core/Include/tz_context.h
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

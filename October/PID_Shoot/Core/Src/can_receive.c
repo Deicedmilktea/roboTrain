@@ -104,7 +104,7 @@ void CAN_cmd_friction(int16_t left_friction, int16_t right_friction)
 void CAN_cmd_trigger(int16_t trigger_speed)
 {
 		uint32_t send_mail_box;
-    gimbal_tx_message.StdId = 0x200;
+    gimbal_tx_message.StdId = 0x1FF;
     gimbal_tx_message.IDE = CAN_ID_STD;
     gimbal_tx_message.RTR = CAN_RTR_DATA;
     gimbal_tx_message.DLC = 0x08;

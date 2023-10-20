@@ -45,6 +45,3 @@ pid_shoot\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.
 pid_shoot\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 pid_shoot\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 pid_shoot\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
-pid_shoot\freertos.o: ../Core/Inc/can_receive.h
-pid_shoot\freertos.o: ../Core/Inc/can.h
-pid_shoot\freertos.o: ../Core/Inc/pid.h
