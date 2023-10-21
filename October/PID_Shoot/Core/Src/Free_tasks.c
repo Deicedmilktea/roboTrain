@@ -58,11 +58,11 @@ void Bullet_rotate_Task(void const * argument)
 	pid_struct_t trigger_pid;
   for(;;)
   {
-		pid_init(&trigger_pid, 2, 0, 0, 500, 500);
+		pid_init(&trigger_pid, 10, 1, 0, 500, 500);
 		//CAN_cmd_trigger(500, 500);
-		cur_trigger_speed = motor[0].speed_rpm;
+		cur_trigger_speed = -motor[4].speed_rpm;
     cur_trigger_current = pid_calc(&trigger_pid, tar_trigger_speed, cur_trigger_speed);
-    CAN_cmd_trigger(cur_trigger_current);
+    CAN_cmd_trigger(-cur_trigger_current);
     osDelay(1);
   }
 }

@@ -5,7 +5,7 @@ static uint8_t              gimbal_can_send_data[8];
 int ERROR1 = 0;
 
 //1: trigger motor; 2: left friction; 3: right friction; 4: gimbal motor
-motor_measure_t motor[4];
+motor_measure_t motor[8];
 
 
 //motor data read
@@ -70,6 +70,10 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
         case 0x202:
         case 0x203:
         case 0x204:
+				case 0x205:
+				case 0x206:
+				case 0x207:
+				case 0x208:
         {
             uint8_t i = 0;
             //get motor id
