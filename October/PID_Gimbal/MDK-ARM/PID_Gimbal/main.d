@@ -33,3 +33,4 @@ pid_gimbal\main.o: ../Core/Inc/can.h
 pid_gimbal\main.o: ../Core/Inc/gpio.h
 pid_gimbal\main.o: ../Core/Inc/can_receive.h
 pid_gimbal\main.o: ../Core/Inc/pid.h
+pid_gimbal\main.o: ../Core/Inc/gimbal.h

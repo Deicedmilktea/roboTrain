@@ -7,6 +7,7 @@
 "pid_gimbal\can.o"
 "pid_gimbal\stm32f4xx_it.o"
 "pid_gimbal\stm32f4xx_hal_msp.o"
+"pid_gimbal\gimbal.o"
 "pid_gimbal\stm32f4xx_hal_can.o"
 "pid_gimbal\stm32f4xx_hal_rcc.o"
 "pid_gimbal\stm32f4xx_hal_rcc_ex.o"
