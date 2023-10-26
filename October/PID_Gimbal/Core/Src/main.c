@@ -72,9 +72,11 @@ void SystemClock_Config(void);
 	float cur_gimbal_speed = 0;
 //	float cur_gimbal_current = 0;
 	
-	float tar_gimbal_ecd = PI;
+	float tar_gimbal_ecd = 0.8*PI;
 	float gimbal_angle_out = 0;
 	float cur_gimbal_ecd = 0;
+	
+	float cur_gimbal_ecd_1 = 0;
 	
 	extern motor_measure_t motor[1];
 	int error1 = 0;
@@ -115,8 +117,9 @@ int main(void)
 	
 	can2_filter_init(); //注意init的顺序
 	
-	pid_init(&gimbal_angle_pid, 10, 0, 0, 50, 8000);
-	pid_init(&gimbal_speed_pid, 10, 0, 0, 50, 3000);
+	pid_init(&gimbal_angle_pid, 5, 2, 0, 100, 8000);
+	pid_init(&gimbal_speed_pid, 5, 2, 0, 100, 3000);
+	tar_gimbal_ecd = angle_map(tar_gimbal_ecd);
 	
   /* USER CODE END 2 */
 
@@ -124,12 +127,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	
 	HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_SET);
-	tar_gimbal_ecd = angle_map(tar_gimbal_ecd);
 	
   while (1)
   {
 		cur_gimbal_speed = motor[0].speed_rpm;
 		cur_gimbal_ecd = motor[0].ecd;
+		angle_over_zero(&tar_gimbal_ecd, &cur_gimbal_ecd);
     gimbal_angle_out = pid_calc(&gimbal_angle_pid, tar_gimbal_ecd, cur_gimbal_ecd);
     gimbal_speed_out = pid_calc(&gimbal_speed_pid, tar_gimbal_speed, gimbal_angle_out);
     CAN_cmd_gimbal(-gimbal_speed_out);
