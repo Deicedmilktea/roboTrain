@@ -47,11 +47,11 @@ uint16_t b_flag;
     rc_ctrl.key.v = rxBuf[14] | (rxBuf[15] << 8);                    //!< KeyBoard value	
     rc_ctrl.rc.ch[4] = rxBuf[16] | (rxBuf[17] << 8);                 //NULL
 
-//    rc_ctrl.rc.ch[0]-=RC_CH_VALUE_OFFSET;
-//    rc_ctrl.rc.ch[1]-=RC_CH_VALUE_OFFSET;
-//    rc_ctrl.rc.ch[2]-=RC_CH_VALUE_OFFSET;
-//    rc_ctrl.rc.ch[3]-=RC_CH_VALUE_OFFSET;
-//    rc_ctrl.rc.ch[4]-=RC_CH_VALUE_OFFSET;
+    rc_ctrl.rc.ch[0]-=RC_CH_VALUE_OFFSET;
+    rc_ctrl.rc.ch[1]-=RC_CH_VALUE_OFFSET;
+    rc_ctrl.rc.ch[2]-=RC_CH_VALUE_OFFSET;
+    rc_ctrl.rc.ch[3]-=RC_CH_VALUE_OFFSET;
+    rc_ctrl.rc.ch[4]-=RC_CH_VALUE_OFFSET;
 		for(int i=0;i<=7;i++)
 		{
 			temp_remote[i]=rxBuf[i];//volatile const uint8_t和uint8_t不一样不能直接带入can_remote这个函数

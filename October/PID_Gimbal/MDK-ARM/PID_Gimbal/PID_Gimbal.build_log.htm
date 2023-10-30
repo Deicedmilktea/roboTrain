@@ -27,7 +27,28 @@ Project File Date:  10/30/2023
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\Software\MDK keil\ARM\ARM_Compiler_5.06u7\Bin'
 Build target 'PID_Gimbal'
-"PID_Gimbal\PID_Gimbal.axf" - 0 Error(s), 0 Warning(s).
+compiling rc_potocal.c...
+..\User\rc_potocal.h(54): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\User\rc_potocal.c(105): warning:  #1-D: last line of file ends without a newline
+  }
+..\User\rc_potocal.c: 2 warnings, 0 errors
+compiling main.c...
+../Core/Inc/can_receive.h(23): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/pid.h(28): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/gimbal.h(10): warning:  #1-D: last line of file ends without a newline
+  #endif
+../User/drv_usart.h(17): warning:  #1-D: last line of file ends without a newline
+  #endif
+../User/rc_potocal.h(54): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Src/main.c: 5 warnings, 0 errors
+linking...
+Program Size: Code=9994 RO-data=458 RW-data=108 ZI-data=2284  
+FromELF: creating hex file...
+"PID_Gimbal\PID_Gimbal.axf" - 0 Error(s), 7 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -51,7 +72,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS/Core/Include/tz_context.h
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>
