@@ -28,7 +28,7 @@ float pid_calc(pid_struct_t *pid, float ref, float fdb)//ref是目标值,fdb是�
   pid->err[1] = pid->err[0];//err[1]是上一次计算出来的差值
   pid->err[0] = pid->ref - pid->fdb;//err[0]是这一次的预期速度和实际速度的差值,这两个值是可以是负数的
   
-  pid->p_out  = pid->kp * pid->err[0];//40 3 0是标准值，把这个加到watch1里面
+  pid->p_out  = pid->kp * pid->err[0];
   pid->i_out += pid->ki * pid->err[0];
   pid->d_out  = pid->kd * (pid->err[0] - pid->err[1]);
 	LimitMax(pid->i_out, pid->i_max);//防止越界

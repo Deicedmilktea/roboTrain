@@ -19,6 +19,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "can.h"
+#include "dma.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -27,6 +29,8 @@
 #include "can_receive.h"
 #include "pid.h"
 #include "gimbal.h"
+#include "drv_usart.h"
+#include "rc_potocal.h"
 
 
 /* USER CODE END Includes */
@@ -80,6 +84,8 @@ void SystemClock_Config(void);
 	
 	extern motor_measure_t motor[1];
 	int error1 = 0;
+	
+	motor_info_t  motor_info_chassis[8];
 
 /* USER CODE END 0 */
 
@@ -111,11 +117,16 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_CAN1_Init();
+	can1_filter_init();
   MX_CAN2_Init();
+  MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 	
-	can2_filter_init(); //注意init的顺序
+	can2_filter_init(); //注意init的顺�?
+	
+	USART3_Init();
 	
 	pid_init(&gimbal_angle_pid, 5, 2, 0, 100, 8000);
 	pid_init(&gimbal_speed_pid, 5, 2, 0, 100, 3000);

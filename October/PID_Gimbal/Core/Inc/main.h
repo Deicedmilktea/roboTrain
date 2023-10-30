@@ -62,6 +62,16 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN Private defines */
 
+typedef struct
+{
+    uint16_t can_id;		//ID�?
+    int16_t  set_current;		//发�?�信�?
+    uint16_t rotor_angle;		//现在的角�?
+    int16_t  rotor_speed;		//现在的转�?
+    int16_t  torque_current;		//实际转矩电流
+	  uint8_t  temp;		//电机温度
+}motor_info_t;
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
