@@ -146,7 +146,7 @@ int main(void)
 		angle_over_zero(&tar_gimbal_ecd, &cur_gimbal_ecd);
     gimbal_angle_out = pid_calc(&gimbal_angle_pid, tar_gimbal_ecd, cur_gimbal_ecd);
     gimbal_speed_out = pid_calc(&gimbal_speed_pid, tar_gimbal_speed, gimbal_angle_out);
-    CAN_cmd_gimbal(-gimbal_speed_out);
+    CAN_cmd_gimbal(-1.5*gimbal_speed_out);
 		error1++;
 		HAL_Delay(1);
     /* USER CODE END WHILE */
