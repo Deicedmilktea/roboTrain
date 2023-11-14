@@ -16,7 +16,7 @@
 
 
 #include "RTE_Components.h"             // Component selection
-void pid_init(pid_struct_t *pid,   fp32 PID[3], fp32 max_out, fp32 max_iout)   //pid结构体初始化，后两个参数分别设置输出最大值，积分最大值
+void pid_init(pid_struct_t *pid,   fp32 PID[3], fp32 max_out, fp32 max_iout)
 {
     if (pid == NULL || PID == NULL)
     {
@@ -33,7 +33,7 @@ void pid_init(pid_struct_t *pid,   fp32 PID[3], fp32 max_out, fp32 max_iout)   /
 }
 
 
-fp32 pid_calc(pid_struct_t *pid, fp32 fdb, fp32 set)   //第二个参数为反馈值，第三个参数为目标值   
+fp32 pid_calc(pid_struct_t *pid, fp32 fdb, fp32 set)
 {
     pid->error[1] = pid->error[0];
     pid->set = set;

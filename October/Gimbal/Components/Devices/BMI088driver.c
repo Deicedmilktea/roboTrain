@@ -138,11 +138,11 @@ uint8_t BMI088_init(SPI_HandleTypeDef *bmi088_SPI, uint8_t calibrate)
     return error;
 }
 
-// ½Ï×¼ÁãÆ®
+// ï¿½ï¿½×¼ï¿½ï¿½Æ®
 void Calibrate_MPU_Offset(IMU_Data_t *bmi088)
 {
     static float startTime;
-    static uint16_t CaliTimes = 6000; // ÐèÒª×ã¹»¶àµÄÊý¾Ý²ÅÄÜµÃµ½ÓÐÐ§ÍÓÂÝÒÇÁãÆ«Ð£×¼½á¹û
+    static uint16_t CaliTimes = 6000; // ï¿½ï¿½Òªï¿½ã¹»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ÜµÃµï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«Ð£×¼ï¿½ï¿½ï¿½
     uint8_t buf[8] = {0, 0, 0, 0, 0, 0};
     int16_t bmi088_raw_temp;
     float gyroMax[3], gyroMin[3];
@@ -153,7 +153,7 @@ void Calibrate_MPU_Offset(IMU_Data_t *bmi088)
     {
         if (DWT_GetTimeline_s() - startTime > 10)
         {
-            // Ð£×¼³¬Ê±
+            // Ð£×¼ï¿½ï¿½Ê±
             bmi088->GyroOffset[0] = GxOFFSET;
             bmi088->GyroOffset[1] = GyOFFSET;
             bmi088->GyroOffset[2] = GzOFFSET;
@@ -196,7 +196,7 @@ void Calibrate_MPU_Offset(IMU_Data_t *bmi088)
                 bmi088->GyroOffset[2] += bmi088->Gyro[2];
             }
 
-            // ¼ÇÂ¼Êý¾Ý¼«²î
+            // ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½ï¿½
             if (i == 0)
             {
                 gNormMax = gNormTemp;
@@ -222,7 +222,7 @@ void Calibrate_MPU_Offset(IMU_Data_t *bmi088)
                 }
             }
 
-            // Êý¾Ý²îÒì¹ý´óÈÏÎªÊÕµ½Íâ½ç¸ÉÈÅ£¬ÐèÖØÐÂÐ£×¼
+            // ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£×¼
             gNormDiff = gNormMax - gNormMin;
             for (uint8_t j = 0; j < 3; j++)
                 gyroDiff[j] = gyroMax[j] - gyroMin[j];
@@ -234,12 +234,12 @@ void Calibrate_MPU_Offset(IMU_Data_t *bmi088)
             DWT_Delay(0.0005);
         }
 
-        // È¡Æ½¾ùÖµµÃµ½±ê¶¨½á¹û
+        // È¡Æ½ï¿½ï¿½Öµï¿½Ãµï¿½ï¿½ê¶¨ï¿½ï¿½ï¿½
         bmi088->gNorm /= (float)CaliTimes;
         for (uint8_t i = 0; i < 3; i++)
             bmi088->GyroOffset[i] /= (float)CaliTimes;
 
-        // ¼ÇÂ¼±ê¶¨Ê±IMUÎÂ¶È
+        // ï¿½ï¿½Â¼ï¿½ê¶¨Ê±IMUï¿½Â¶ï¿½
         BMI088_accel_read_muli_reg(BMI088_TEMP_M, buf, 2);
         bmi088_raw_temp = (int16_t)((buf[0] << 3) | (buf[1] >> 5));
         if (bmi088_raw_temp > 1023)
@@ -256,7 +256,7 @@ void Calibrate_MPU_Offset(IMU_Data_t *bmi088)
              fabsf(bmi088->GyroOffset[1]) > 0.01f ||
              fabsf(bmi088->GyroOffset[2]) > 0.01f);
 
-    // ¸ù¾Ý±ê¶¨½á¹ûÐ£×¼¼ÓËÙ¶È¼Æ±ê¶ÈÒòÊý
+    // ï¿½ï¿½ï¿½Ý±ê¶¨ï¿½ï¿½ï¿½Ð£×¼ï¿½ï¿½ï¿½Ù¶È¼Æ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     bmi088->AccelScale = 9.81f / bmi088->gNorm;
 }
 

@@ -32,7 +32,6 @@
 #include "INS_task.h"
 #include "drv_can.h"
 #include "drv_usart.h"
-#
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -98,6 +97,7 @@ float small;
 float angle_limit =8191;//转角的最大值
 
 uint8_t rx_data[8];
+
 /* USER CODE END 0 */
 
 /**
@@ -143,13 +143,13 @@ int main(void)
   MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
 	HAL_TIM_PWM_Start(&htim10,TIM_CHANNEL_1);
-	HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);//修改TIM2中断优先级
-//	HAL_NVIC_SetPriority(SysTick_IRQn,1,1);//调高HAL_Delay的时钟中断优先级
+	HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
+//	HAL_NVIC_SetPriority(SysTick_IRQn,1,1);
 	CAN1_Init();
   CAN2_Init();
   USART6_Init();
 	USART3_Init();
-	HAL_TIM_Base_Start_IT(&htim1);//开启定时器1并打开中断,记得修改优先级
+	HAL_TIM_Base_Start_IT(&htim1);
 DWT_Init(168);
     while (BMI088_init(&hspi1, 1) != BMI088_NO_ERROR)
         ;

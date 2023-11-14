@@ -4,6 +4,10 @@
             "path": "."
         }
     ],
-    "settings": {},
+    "settings": {
+        "files.associations": {
+            "bmi088reg.h": "c"
+        }
+    },
     "extensions": {}
 }

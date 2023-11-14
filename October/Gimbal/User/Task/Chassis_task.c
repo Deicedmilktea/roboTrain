@@ -89,7 +89,6 @@ void RC_move(){
 					
 				}
 				chassis_current_give();
-				//chassis_current_give();
 					
         osDelay(1);
 

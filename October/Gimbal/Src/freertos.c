@@ -139,14 +139,12 @@ void MX_FREERTOS_Init(void) {
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
 	
-	osThreadDef(Chassistask, Chassis_task, osPriorityRealtime, 0, 512);		//�����ƶ�����
+	osThreadDef(Chassistask, Chassis_task, osPriorityRealtime, 0, 512);
   Chassis_taskHandle = osThreadCreate(osThread(Chassistask), NULL);
 	
-	osThreadDef(Gimbaltask, Gimbal_task, osPriorityRealtime, 0, 512);		//�����ƶ�����
+	osThreadDef(Gimbaltask, Gimbal_task, osPriorityRealtime, 0, 512);
   Gimbal_taskHandle = osThreadCreate(osThread(Gimbaltask), NULL);
 
-
-	
 	osThreadDef(UItask, UI_Task, osPriorityRealtime, 0, 512);
   UI_taskHandle = osThreadCreate(osThread(UItask), NULL);
 		
@@ -157,7 +155,6 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
-//while(1){}
 }
 
 /* USER CODE BEGIN Header_StartINSTask */
@@ -167,6 +164,7 @@ void MX_FREERTOS_Init(void) {
  * @retval None
  */
 /* USER CODE END Header_StartINSTask */
+int error1=0;
 void StartINSTask(void const * argument)
 {
   /* USER CODE BEGIN StartINSTask */
@@ -174,6 +172,7 @@ void StartINSTask(void const * argument)
     /* Infinite loop */
     for (;;)
     {
+        error1++;
         INS_Task();
         osDelay(1);
     }
@@ -187,7 +186,7 @@ void StartDefaultTask(void const * argument)
   /* USER CODE BEGIN StartDefaultTask */
 	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_11,GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_10,GPIO_PIN_SET);
-	uint8_t TIM1_flag = 1;//��֪��bug
+	uint8_t TIM1_flag = 1;
   /* Infinite loop */
   for(;;)
   {
