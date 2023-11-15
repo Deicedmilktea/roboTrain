@@ -1,33 +1,30 @@
 #ifndef PID_H
 #define PID_H
 #include "struct_typedef.h"
-typedef struct
+
+typedef struct _pid_struct_t
 {
-    
-    fp32 Kp;
-    fp32 Ki;
-    fp32 Kd;
+  float kp;
+  float ki;
+  float kd;
+  float i_max;
+  float out_max;
+  
+  float ref;      // target value
+  float fdb;      // feedback value  
+  float err[2];   // error and last error
 
-    fp32 max_out;  
-    fp32 max_iout; 
+  float p_out;
+  float i_out;
+  float d_out;
+  float output;
+}pid_struct_t;
 
-    fp32 set;
-    fp32 fdb;
+void pid_init(pid_struct_t *pid, float value[3], float i_max, float out_max);
 
-    fp32 out;
-    fp32 Pout;
-    fp32 Iout;
-    fp32 Dout;
-    fp32 Dbuf[3];  
-    fp32 error[3]; 
-
-} pid_struct_t;
-
-extern void pid_init(pid_struct_t *pid, 
-  fp32 PID[3], fp32 max_out, fp32 max_iout);
+float pid_calc(pid_struct_t *pid, float ref, float fdb); //ref是目标值,fdb是电机解码的速度返回值
 
 
-extern fp32 pid_calc(pid_struct_t *pid, fp32 ref, fp32 set);
 
 
 
