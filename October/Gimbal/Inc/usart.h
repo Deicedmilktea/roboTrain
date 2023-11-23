@@ -40,6 +40,13 @@ extern UART_HandleTypeDef huart6;
 
 /* USER CODE BEGIN Private defines */
 
+#ifdef __GNUC_
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif
+
+
 /* USER CODE END Private defines */
 
 void MX_USART1_UART_Init(void);

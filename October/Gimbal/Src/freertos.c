@@ -61,15 +61,14 @@ osThreadId super_capHandle;
 osThreadId UI_taskHandle;
 /* USER CODE END Variables */
 osThreadId INSTaskHandle;
-osThreadId exchangeTaskHandle;
-osThreadId defaultTaskHandle;
+
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 
 /* USER CODE END FunctionPrototypes */
 
 void StartINSTask(void const * argument);
-void StartDefaultTask(void const * argument);
+
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
@@ -132,29 +131,13 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of INSTask */
- osThreadDef(INSTask, StartINSTask, osPriorityNormal, 0, 2048);
+  osThreadDef(INSTask, StartINSTask, osPriorityNormal, 0, 1024);
   INSTaskHandle = osThreadCreate(osThread(INSTask), NULL);
-
-	  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
-
-	
-	osThreadDef(Chassistask, Chassis_task, osPriorityRealtime, 0, 256);
-  Chassis_taskHandle = osThreadCreate(osThread(Chassistask), NULL);
-	
-	osThreadDef(Gimbaltask, Gimbal_task, osPriorityRealtime, 0, 256);
-  Gimbal_taskHandle = osThreadCreate(osThread(Gimbaltask), NULL);
-
-	osThreadDef(UItask, UI_Task, osPriorityRealtime, 0, 512);
-  UI_taskHandle = osThreadCreate(osThread(UItask), NULL);
-		
-	 osThreadDef(exchangeTask, exchange_task, osPriorityNormal, 0, 128);
-  exchangeTaskHandle = osThreadCreate(osThread(exchangeTask), NULL);
-
 
   /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
+
 }
 
 /* USER CODE BEGIN Header_StartINSTask */
@@ -164,7 +147,6 @@ void MX_FREERTOS_Init(void) {
  * @retval None
  */
 /* USER CODE END Header_StartINSTask */
-int error1=0;
 void StartINSTask(void const * argument)
 {
   /* USER CODE BEGIN StartINSTask */
@@ -172,7 +154,6 @@ void StartINSTask(void const * argument)
     /* Infinite loop */
     for (;;)
     {
-        error1++;
         INS_Task();
         osDelay(1);
     }

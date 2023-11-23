@@ -61,12 +61,12 @@ typedef struct
     uint16_t rotor_angle;		//���ڵĽǶ�
     int16_t  rotor_speed;		//���ڵ�ת��
     int16_t  torque_current;		//ʵ��ת�ص���
-    uint8_t  temp;		//����¶�
+    uint8_t  temp;		//����¶�?
 }moto_info_t;
 
 
 //�궨��
-#define MOTOR_MAX_NUM 7		//��������ֽ���
+#define MOTOR_MAX_NUM 7		//��������ֽ���?
 #define LIMIT_MIN_MAX(x,min,max) (x) = (((x)<=(min))?(min):(((x)>=(max))?(max):(x)))		//Խ���򸳱߽�ֵ
 #define FEEDBACK_ID_BASE      0x201
 #define FEEDBACK_ID_BASE_6020 0x205
@@ -124,6 +124,9 @@ extern uint8_t rx_data[8];
 #define HALL_SENSOR_PIN1_Pin GPIO_PIN_6
 #define HALL_SENSOR_PIN1_GPIO_Port GPIOI
 #define HALL_SENSOR_PIN1_EXTI_IRQn EXTI9_5_IRQn
+#define down8_Pin GPIO_PIN_0
+#define down8_GPIO_Port GPIOF
+#define down8_EXTI_IRQn EXTI0_IRQn
 #define LASER_Pin GPIO_PIN_8
 #define LASER_GPIO_Port GPIOC
 #define RSTN_IST8310_Pin GPIO_PIN_6
@@ -147,6 +150,9 @@ extern uint8_t rx_data[8];
 #define SPI2_CS_GPIO_Port GPIOB
 #define CS1_GYRO_Pin GPIO_PIN_0
 #define CS1_GYRO_GPIO_Port GPIOB
+#define up7_Pin GPIO_PIN_15
+#define up7_GPIO_Port GPIOB
+#define up7_EXTI_IRQn EXTI15_10_IRQn
 
 /* USER CODE BEGIN Private defines */
 

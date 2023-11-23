@@ -4,12 +4,6 @@
             "path": "."
         }
     ],
-    "settings": {
-        "files.associations": {
-            "chassis_task.h": "c",
-            "pid.h": "c",
-            "struct_typedef.h": "c"
-        }
-    },
+    "settings": {},
     "extensions": {}
 }

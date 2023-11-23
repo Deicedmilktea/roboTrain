@@ -63,38 +63,38 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-//È«¾Ö±äÁ¿
+//È«ï¿½Ö±ï¿½ï¿½ï¿½
 uint16_t can_cnt_2;
-float target_speed[7]={0};//Êµ²â×î´ó¿ÕÔØ×ªËÙ320rpm
-float target_speed_can_2[7]={0};//Êµ²â×î´ó¿ÕÔØ×ªËÙ320rpm
-moto_info_t motor_info[MOTOR_MAX_NUM];		//¸³Óè×î´óµÄ7¸ö×Ö½Ú
-moto_info_t motor_info_can_2[MOTOR_MAX_NUM];		//¸³Óè×î´óµÄ7¸ö×Ö½Ú
+float target_speed[7]={0};//Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½320rpm
+float target_speed_can_2[7]={0};//Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½320rpm
+moto_info_t motor_info[MOTOR_MAX_NUM];		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½7ï¿½ï¿½ï¿½Ö½ï¿½
+moto_info_t motor_info_can_2[MOTOR_MAX_NUM];		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½7ï¿½ï¿½ï¿½Ö½ï¿½
 	
 uint8_t can_flag=0;
 double step=9158/660; 
 double r;
 double target_v;
 int16_t target_int1;
-int16_t target_int2;//ÓÃÓÚµþ¼ÓÐý×ªºÍÖ±ÐÐ
+int16_t target_int2;//ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Ö±ï¿½ï¿½
 double target_curl;
 float yuntai_step=60*(1024-364);
 
 
-//²¦ÅÌ
-float time=100;//Ê±¼ä
-float time_count;//Ê±¼ä¼ÆÊýÖµ
-uint8_t flag_shoot;//±êÖ¾Î»
-float round_shoot;//×ª¶¯È¦Êý
+//ï¿½ï¿½ï¿½ï¿½
+float time=100;//Ê±ï¿½ï¿½
+float time_count;//Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+uint8_t flag_shoot;//ï¿½ï¿½Ö¾Î»
+float round_shoot;//×ªï¿½ï¿½È¦ï¿½ï¿½
 float down;
 float up;
 
 
-//YawÖá
+//Yawï¿½ï¿½
 int16_t target_angle=4096;
 int16_t err_angle;
 int16_t max_yaw_speed;
 float small;
-float angle_limit =8191;//×ª½ÇµÄ×î´óÖµ
+float angle_limit =8191;//×ªï¿½Çµï¿½ï¿½ï¿½ï¿½Öµ
 
 uint8_t rx_data[8];
 
@@ -141,6 +141,8 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART3_UART_Init();
   MX_USART6_UART_Init();
+  MX_TIM4_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
 	HAL_TIM_PWM_Start(&htim10,TIM_CHANNEL_1);
 	HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
@@ -160,6 +162,7 @@ DWT_Init(168);
 
   /* Start scheduler */
   osKernelStart();
+
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -167,7 +170,7 @@ DWT_Init(168);
   while (1)
   {
     /* USER CODE END WHILE */
-		
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
