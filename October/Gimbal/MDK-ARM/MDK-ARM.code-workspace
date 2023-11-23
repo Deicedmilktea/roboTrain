@@ -6,7 +6,9 @@
     ],
     "settings": {
         "files.associations": {
-            "bmi088reg.h": "c"
+            "chassis_task.h": "c",
+            "pid.h": "c",
+            "struct_typedef.h": "c"
         }
     },
     "extensions": {}

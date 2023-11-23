@@ -5,14 +5,15 @@
 #include  "drv_can.h"
 #include "rc_potocal.h"
 #include "main.h"
+
 typedef struct
 {
-    uint16_t can_id;		//IDºÅ
-    int16_t  set_current;		//·¢ËÍÐÅÏ¢
-    uint16_t rotor_angle;		//ÏÖÔÚµÄ½Ç¶È
-    int16_t  rotor_speed;		//ÏÖÔÚµÄ×ªËÙ
-    int16_t  torque_current;		//Êµ¼Ê×ª¾ØµçÁ÷
-    uint8_t  temp;		//µç»úÎÂ¶È
+    uint16_t can_id;		//IDï¿½ï¿½
+    int16_t  set_current;		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+    uint16_t rotor_angle;		//ï¿½ï¿½ï¿½ÚµÄ½Ç¶ï¿½
+    int16_t  rotor_speed;		//ï¿½ï¿½ï¿½Úµï¿½×ªï¿½ï¿½
+    int16_t  torque_current;		//Êµï¿½ï¿½×ªï¿½Øµï¿½ï¿½ï¿½
+    uint8_t  temp;		//ï¿½ï¿½ï¿½ï¿½Â¶ï¿½
 }motor_info_t;
 
 

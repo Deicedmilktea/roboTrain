@@ -24,10 +24,10 @@ typedef struct
 } pid_struct_t;
 
 extern void pid_init(pid_struct_t *pid, 
-  fp32 PID[3], fp32 max_out, fp32 max_iout);
+  fp32 value[3], fp32 i_max, fp32 out_max);
 
 
-extern fp32 pid_calc(pid_struct_t *pid, fp32 ref, fp32 set);
+extern fp32 pid_calc(pid_struct_t *pid, fp32 ref, fp32 fdb);
 
 
 

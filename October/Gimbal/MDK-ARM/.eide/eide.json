@@ -67,10 +67,10 @@
             "name": "MDK-ARM",
             "files": [
               {
-                "path": "../Drivers/CMSIS/Lib/ARM/arm_cortexM4lf_math.lib"
+                "path": "startup_stm32f407xx.s"
               },
               {
-                "path": "startup_stm32f407xx.s"
+                "path": "../Drivers/CMSIS/Lib/ARM/arm_cortexM4lf_math.lib"
               }
             ],
             "folders": []
@@ -139,16 +139,13 @@
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c"
               },
               {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c"
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c"
               },
               {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c"
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c"
               },
               {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c"
-              },
-              {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c"
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c"
               },
               {
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c"
@@ -157,43 +154,46 @@
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c"
               },
               {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c"
-              },
-              {
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c"
               },
               {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c"
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c"
               },
               {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c"
-              },
-              {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c"
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c"
               },
               {
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c"
               },
               {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c"
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c"
               },
               {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c"
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c"
+              },
+              {
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c"
+              },
+              {
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c"
+              },
+              {
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c"
+              },
+              {
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c"
               },
               {
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c"
               },
               {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c"
-              },
-              {
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c"
               },
               {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c"
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c"
               },
               {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c"
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c"
               }
             ],
             "folders": []
@@ -208,9 +208,6 @@
             "name": "FreeRTOS",
             "files": [
               {
-                "path": "../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c"
-              },
-              {
                 "path": "../Middlewares/Third_Party/FreeRTOS/Source/croutine.c"
               },
               {
@@ -218,12 +215,6 @@
               },
               {
                 "path": "../Middlewares/Third_Party/FreeRTOS/Source/list.c"
-              },
-              {
-                "path": "../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c"
-              },
-              {
-                "path": "../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/port.c"
               },
               {
                 "path": "../Middlewares/Third_Party/FreeRTOS/Source/queue.c"
@@ -236,6 +227,15 @@
               },
               {
                 "path": "../Middlewares/Third_Party/FreeRTOS/Source/timers.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/port.c"
               }
             ],
             "folders": []
@@ -412,17 +412,12 @@
         },
         "options": "null"
       },
-      "uploader": "STLink",
+      "uploader": "OpenOCD",
       "uploadConfig": {
         "bin": "",
-        "proType": "SWD",
-        "resetMode": "default",
-        "runAfterProgram": true,
-        "speed": 4000,
-        "address": "0x8000000",
-        "elFile": "None",
-        "optionBytes": ".eide/c_board_standard_robot.st.option.bytes.ini",
-        "otherCmds": ""
+        "target": "stm32f4x",
+        "interface": "cmsis-dap",
+        "baseAddr": "0x08000000"
       },
       "uploadConfigMap": {
         "JLink": {

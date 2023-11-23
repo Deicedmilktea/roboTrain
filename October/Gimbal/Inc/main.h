@@ -56,54 +56,54 @@ void Error_Handler(void);
 /* USER CODE BEGIN EFP */
 typedef struct
 {
-    uint16_t can_id;		//IDºÅ
-    int16_t  set_voltage;		//·¢ËÍÐÅÏ¢
-    uint16_t rotor_angle;		//ÏÖÔÚµÄ½Ç¶È
-    int16_t  rotor_speed;		//ÏÖÔÚµÄ×ªËÙ
-    int16_t  torque_current;		//Êµ¼Ê×ª¾ØµçÁ÷
-    uint8_t  temp;		//µç»úÎÂ¶È
+    uint16_t can_id;		//IDï¿½ï¿½
+    int16_t  set_voltage;		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+    uint16_t rotor_angle;		//ï¿½ï¿½ï¿½ÚµÄ½Ç¶ï¿½
+    int16_t  rotor_speed;		//ï¿½ï¿½ï¿½Úµï¿½×ªï¿½ï¿½
+    int16_t  torque_current;		//Êµï¿½ï¿½×ªï¿½Øµï¿½ï¿½ï¿½
+    uint8_t  temp;		//ï¿½ï¿½ï¿½ï¿½Â¶ï¿½
 }moto_info_t;
 
 
-//ºê¶¨Òå
-#define MOTOR_MAX_NUM 7		//×î´óÊý¾Ý×Ö½ÚÊý
-#define LIMIT_MIN_MAX(x,min,max) (x) = (((x)<=(min))?(min):(((x)>=(max))?(max):(x)))		//Ô½½çÔò¸³±ß½çÖµ
+//ï¿½ê¶¨ï¿½ï¿½
+#define MOTOR_MAX_NUM 7		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½
+#define LIMIT_MIN_MAX(x,min,max) (x) = (((x)<=(min))?(min):(((x)>=(max))?(max):(x)))		//Ô½ï¿½ï¿½ï¿½ò¸³±ß½ï¿½Öµ
 #define FEEDBACK_ID_BASE      0x201
 #define FEEDBACK_ID_BASE_6020 0x205
 #define CAN_CONTROL_ID_BASE   0x200
 #define CAN_CONTROL_ID_EXTEND 0x1ff
 extern UART_HandleTypeDef huart3;
 extern DMA_HandleTypeDef hdma_usart3_rx;
-//È«¾Ö±äÁ¿
+//È«ï¿½Ö±ï¿½ï¿½ï¿½
 extern uint16_t can_cnt_1;
 extern uint16_t can_cnt_2;
-extern float target_speed[7];//Êµ²â×î´ó¿ÕÔØ×ªËÙ320rpm
+extern float target_speed[7];//Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½320rpm
 extern float target_speed_can_2[7];
-extern moto_info_t motor_info[MOTOR_MAX_NUM];		//¸³Óè×î´óµÄ7¸ö×Ö½Ú
+extern moto_info_t motor_info[MOTOR_MAX_NUM];		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½7ï¿½ï¿½ï¿½Ö½ï¿½
 extern moto_info_t motor_info_can_2[MOTOR_MAX_NUM];
 extern uint8_t can_flag;
 extern double step; 
 extern double r;
 extern double target_v;
 extern int16_t target_int1;
-extern int16_t target_int2;//ÓÃÓÚµþ¼ÓÐý×ªºÍÖ±ÐÐ
+extern int16_t target_int2;//ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Ö±ï¿½ï¿½
 extern double target_curl;
 extern float yuntai_step;
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
-//²¦ÅÌ
+//ï¿½ï¿½ï¿½ï¿½
 extern float time;
 extern float time_count;
 extern uint8_t flag_shoot;
 extern float round_shoot;
 extern float down;
 extern float up;
-//¶¨Ê±Æ÷ÉùÃ÷
+//ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim8;
 extern TIM_HandleTypeDef htim9;
-//YawÖá
+//Yawï¿½ï¿½
 #define yaw_front 4096
 #define yaw_L 30.0f
 #define tyro 3.1415f*7.5f

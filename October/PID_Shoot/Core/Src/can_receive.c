@@ -100,20 +100,20 @@ void CAN_cmd_friction(int16_t left_friction, int16_t right_friction)
     gimbal_tx_message.DLC = 0x08;
     gimbal_can_send_data[2] = (left_friction >> 8);
     gimbal_can_send_data[3] = left_friction;
-    gimbal_can_send_data[4] = (right_friction >> 8);
-    gimbal_can_send_data[5] = right_friction;
+    gimbal_can_send_data[0] = (right_friction >> 8);
+    gimbal_can_send_data[1] = right_friction;
     HAL_CAN_AddTxMessage(&hcan2, &gimbal_tx_message, gimbal_can_send_data, &send_mail_box);
 }
 
 void CAN_cmd_trigger(int16_t trigger_speed)
 {
 		uint32_t send_mail_box;
-    gimbal_tx_message.StdId = 0x1FF;
+    gimbal_tx_message.StdId = 0x200;
     gimbal_tx_message.IDE = CAN_ID_STD;
     gimbal_tx_message.RTR = CAN_RTR_DATA;
     gimbal_tx_message.DLC = 0x08;
-		gimbal_can_send_data[0] = (trigger_speed >> 8);
-    gimbal_can_send_data[1] = trigger_speed;
+		gimbal_can_send_data[4] = (trigger_speed >> 8);
+    gimbal_can_send_data[5] = trigger_speed;
     HAL_CAN_AddTxMessage(&hcan2, &gimbal_tx_message, gimbal_can_send_data, &send_mail_box);
 }
 

@@ -23,6 +23,7 @@ volatile int16_t motor_speed_target[4];
 // Save imu data
 
 int16_t chassis_mode = 1;//判断底盘状态，用于UI编写
+int16_t shot_mode = 0;
 
 //获取imu——Yaw角度差值参数
 static void Get_Err(); 
@@ -51,7 +52,7 @@ int16_t Speedmapping(int value, int from_min, int from_max, int to_min, int to_m
 void Calculate_speed(){
 	Vx=Speedmapping(rc_ctrl.rc.ch[2],-660,660,-1000,1000);// left and right
 	Vy=Speedmapping(rc_ctrl.rc.ch[3],-660,660,-1000,1000);// front and back
-	Wz=Speedmapping(rc_ctrl.rc.ch[0],-660,660,-1000,1000);// rotate
+	Wz=Speedmapping(rc_ctrl.rc.ch[4],-660,660,-1000,1000);// rotate      
 }
 
 void RC_move(){
@@ -66,17 +67,16 @@ void RC_move(){
  
    void Chassis_task(void const *pvParameters)
 {
- 			       for (uint8_t i = 0; i < 4; i++)
+ 			for (uint8_t i = 0; i < 4; i++)
 			{
         pid_init(&motor_pid_chassis[i], chassis_motor_pid, 6000, 6000); //init pid parameter, kp=40, ki=3, kd=0, output limit = 16384
-				
-			} 
+			}
 				pid_init(&supercap_pid, superpid, 3000, 3000); //init pid parameter, kp=40, ki=3, kd=0, output limit = 16384			
 
   
     for(;;)				//底盘运动任务
     {     flag=1;
-				chassis_mode = rc_ctrl.rc.s[0];
+				chassis_mode = rc_ctrl.rc.s[0];//1，3，2
 				Calculate_speed();
 				if(chassis_mode==1){
 						motor_speed_target[CHAS_LF] =  1000;
@@ -86,19 +86,30 @@ void RC_move(){
 				}
 				if(chassis_mode==2){
 						RC_move();
-					
 				}
+//				//发射测试
+//				shot_mode = rc_ctrl.rc.s[0];
+//				if(shot_mode == 3)
+//				{
+//						motor_speed_target[4] =  0;
+//						motor_speed_target[5] =  0;
+//						motor_speed_target[6] =  0;
+//						motor_speed_target[7] =  0;
+//				}
+//				if(shot_mode == 1)
+//				{
+//						motor_speed_target[4] =  0;
+//						motor_speed_target[5] =  1000;
+//						motor_speed_target[6] =  1000;
+//						motor_speed_target[7] =  500;
+//				}
 				chassis_current_give();
 					
         osDelay(1);
 
     }
 
-
-
 }
-
-
 
 
 
@@ -141,9 +152,9 @@ void chassis_motol_speed_calculate()
     {
           rate = max_speed*1.0/max;   //*1.0转浮点类型，不然可能会直接得0   *1.0 to floating point type, otherwise it may directly get 0
           for (i = 0; i < 4; i++)
-        {
+					{
             motor_speed[i] *= rate;
-        }
+					}
 
     }
 
@@ -156,10 +167,10 @@ void chassis_current_give()
         
     for(i=0 ; i<4; i++)
     {
-        motor_info_chassis[i].set_current = pid_calc(&motor_pid_chassis[i], motor_info_chassis[i].rotor_speed,motor_speed_target[i]);
+        motor_info_chassis[i].set_current = pid_calc(&motor_pid_chassis[i], motor_info_chassis[i].rotor_speed, motor_speed_target[i]);
     }
-    	set_motor_current_can2(0, motor_info_chassis[0].set_current, motor_info_chassis[1].set_current, motor_info_chassis[2].set_current, motor_info_chassis[3].set_current);
- 
+    	set_motor_current_can1(0, motor_info_chassis[0].set_current, motor_info_chassis[1].set_current, motor_info_chassis[2].set_current, motor_info_chassis[3].set_current);
+//			set_motor_current_can2(1, motor_info_chassis[4].set_current, motor_info_chassis[5].set_current, motor_info_chassis[6].set_current, motor_info_chassis[7].set_current);
 
 }
 
