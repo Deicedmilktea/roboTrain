@@ -32,8 +32,9 @@
 /* USER CODE BEGIN TD */
 uint16_t TIM1_Count = 0;
 uint8_t TIM1_flag = 1;
-int flag = 0; //光电门计数
-int a = 0, b = 0;
+int flag = 0; //光电门计�??
+int a = 0;
+int b = 0;
 fp32 speed = 0; //计算球的速度
 /* USER CODE END TD */
 
@@ -185,20 +186,21 @@ void DebugMon_Handler(void)
 /******************************************************************************/
 
 /**
-  * @brief This function handles EXTI line0 interrupt.
+  * @brief This function handles EXTI line2 interrupt.
   */
-void EXTI0_IRQHandler(void)
+void EXTI2_IRQHandler(void)
 {
-  /* USER CODE BEGIN EXTI0_IRQn 0 */
-  b = flag;
+  /* USER CODE BEGIN EXTI2_IRQn 0 */
+	b = flag;
 	printf("b=%d",b);
-  /* USER CODE END EXTI0_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(down8_Pin);
-  /* USER CODE BEGIN EXTI0_IRQn 1 */
-  /* USER CODE END EXTI0_IRQn 1 */
+  /* USER CODE END EXTI2_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(door2_Pin);
+  /* USER CODE BEGIN EXTI2_IRQn 1 */
+
+  /* USER CODE END EXTI2_IRQn 1 */
 }
 
-/**s
+/**
   * @brief This function handles EXTI line3 interrupt.
   */
 void EXTI3_IRQHandler(void)
@@ -289,11 +291,10 @@ void EXTI9_5_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI9_5_IRQn 0 */
 
-
   /* USER CODE END EXTI9_5_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(INT1_GYRO_Pin);
-  HAL_GPIO_EXTI_IRQHandler(HALL_SENSOR_PIN1_Pin);
   HAL_GPIO_EXTI_IRQHandler(HALL_SENSOR_PIN2_Pin);
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_8);
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_9);
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
 
@@ -403,12 +404,13 @@ void USART3_IRQHandler(void)
 void EXTI15_10_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
-  a = flag;
-  speed = 100 * 0.1 / (a - b);//计算速度
-  printf("a=%d, speed=%d",a,speed);
+	a = flag;
+  speed = 100 * 0.1 / (b - a);//计算速度
+  printf("a=%d, speed=%f",a,speed);
   /* USER CODE END EXTI15_10_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(up7_Pin);
+  HAL_GPIO_EXTI_IRQHandler(door1_Pin);
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
+
   /* USER CODE END EXTI15_10_IRQn 1 */
 }
 

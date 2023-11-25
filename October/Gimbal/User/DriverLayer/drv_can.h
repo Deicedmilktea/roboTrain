@@ -13,4 +13,6 @@ void set_motor_current_can2(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3
 //CAN1发送信号（底盘+云台）
 void set_motor_current_can1(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3, int16_t v4);
 
+//CAN2发送信号（摩擦轮+拨盘+抬头）
+void set_motor_current_can22(int16_t v1, int16_t v2, int16_t v3, int16_t v4);
 #endif

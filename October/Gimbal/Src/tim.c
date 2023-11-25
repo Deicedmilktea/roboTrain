@@ -347,7 +347,7 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
   else if(tim_baseHandle->Instance==TIM6)
   {
   /* USER CODE BEGIN TIM6_MspInit 0 */
-		flag++;
+
   /* USER CODE END TIM6_MspInit 0 */
     /* TIM6 clock enable */
     __HAL_RCC_TIM6_CLK_ENABLE();

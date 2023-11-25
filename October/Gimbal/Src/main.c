@@ -82,7 +82,7 @@ float yuntai_step=60*(1024-364);
 
 //����
 float time=100;//ʱ��
-float time_count;//ʱ�����ֵ
+float time_count;//ʱ������?
 uint8_t flag_shoot;//��־λ
 float round_shoot;//ת��Ȧ��
 float down;
@@ -94,10 +94,11 @@ int16_t target_angle=4096;
 int16_t err_angle;
 int16_t max_yaw_speed;
 float small;
-float angle_limit =8191;//ת�ǵ����ֵ
+float angle_limit =8191;//ת�ǵ�����?
 
 uint8_t rx_data[8];
 
+extern int flag;
 /* USER CODE END 0 */
 
 /**
@@ -152,9 +153,10 @@ int main(void)
   USART6_Init();
 	USART3_Init();
 	HAL_TIM_Base_Start_IT(&htim1);
+  HAL_TIM_Base_Start_IT(&htim6);//测试发弹速度
 DWT_Init(168);
-    while (BMI088_init(&hspi1, 1) != BMI088_NO_ERROR)
-        ;
+   while (BMI088_init(&hspi1, 1) != BMI088_NO_ERROR)
+       ;
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */
@@ -172,6 +174,8 @@ DWT_Init(168);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		
+		
   }
   /* USER CODE END 3 */
 }
@@ -242,7 +246,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
-
+	
   /* USER CODE END Callback 1 */
 }
 

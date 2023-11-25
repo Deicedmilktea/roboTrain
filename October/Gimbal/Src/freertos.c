@@ -54,13 +54,14 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-osThreadId Chassis_taskHandle;
-osThreadId Gimbal_taskHandle;
+//osThreadId Chassis_taskHandle;
 osThreadId myTask02Handle;
 osThreadId super_capHandle;
 osThreadId UI_taskHandle;
 /* USER CODE END Variables */
 osThreadId INSTaskHandle;
+osThreadId ChassisTaskHandle;
+osThreadId GimbalTaskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -68,6 +69,8 @@ osThreadId INSTaskHandle;
 /* USER CODE END FunctionPrototypes */
 
 void StartINSTask(void const * argument);
+void Chassis_task(void const * argument);
+void Gimbal_task(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -134,6 +137,14 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(INSTask, StartINSTask, osPriorityNormal, 0, 1024);
   INSTaskHandle = osThreadCreate(osThread(INSTask), NULL);
 
+  /* definition and creation of ChassisTask */
+  osThreadDef(ChassisTask, Chassis_task, osPriorityIdle, 0, 256);
+  ChassisTaskHandle = osThreadCreate(osThread(ChassisTask), NULL);
+
+  /* definition and creation of GimbalTask */
+  osThreadDef(GimbalTask, Gimbal_task, osPriorityIdle, 0, 256);
+  GimbalTaskHandle = osThreadCreate(osThread(GimbalTask), NULL);
+
   /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -158,6 +169,42 @@ void StartINSTask(void const * argument)
         osDelay(1);
     }
   /* USER CODE END StartINSTask */
+}
+
+/* USER CODE BEGIN Header_Chassis_task */
+/**
+* @brief Function implementing the Chassistask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Chassis_task */
+__weak void Chassis_task(void const * argument)
+{
+  /* USER CODE BEGIN Chassis_task */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END Chassis_task */
+}
+
+/* USER CODE BEGIN Header_Gimbal_task */
+/**
+* @brief Function implementing the GimbalTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Gimbal_task */
+__weak void Gimbal_task(void const * argument)
+{
+  /* USER CODE BEGIN Gimbal_task */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END Gimbal_task */
 }
 
 /* Private application code --------------------------------------------------*/

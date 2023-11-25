@@ -32,7 +32,7 @@ fp32 ins_yaw;
 fp32 ins_yaw_update = 0;
 fp32 Driftring_yaw = 0;
 fp32 ins_pitch;
-fp32 ins_row;
+fp32 ins_roll;
 fp32 init_yaw;	//记录yaw初始量
 int Update_yaw_flag = 1;
 fp32 err_yaw_range = 1;
@@ -47,6 +47,7 @@ void Gimbal_task(void const *pvParameters)
 	
 	for(;;)
 	{
+		error6++;
 		remote_gimbal_control(gimbal_mode);  //加上遥控器的控制
 		osDelay(1);
 	}
@@ -67,17 +68,17 @@ void Gimbal_loop_init()
 	gimbal_gyro.pid_angle_value[1] = 0;
 	gimbal_gyro.pid_angle_value[2] = 0;
 
-	gimbal_gyro.pid_speed_value[0] = 250;
-	gimbal_gyro.pid_speed_value[1] = 0.5;
-	gimbal_gyro.pid_speed_value[2] = 0;
+	gimbal_gyro.pid_speed_value[0] = 300;
+	gimbal_gyro.pid_speed_value[1] = 30;
+	gimbal_gyro.pid_speed_value[2] = 1;
 
 	gimbal_encoder.target_angle = 0;
 	gimbal_encoder.target_speed = 0;
 
 	pid_init(&gimbal_encoder.pid_angle, gimbal_encoder.pid_angle_value, 500, 8191);
 	pid_init(&gimbal_encoder.pid_speed, gimbal_encoder.pid_speed_value, 100, 3000);
-	pid_init(&gimbal_gyro.pid_angle, gimbal_gyro.pid_angle_value, 15, 180);
-	pid_init(&gimbal_gyro.pid_speed, gimbal_gyro.pid_speed_value, 15000, 15000);
+	pid_init(&gimbal_gyro.pid_angle, gimbal_gyro.pid_angle_value, 15000, 180);
+	pid_init(&gimbal_gyro.pid_speed, gimbal_gyro.pid_speed_value, 1000, 15000);
 }
 
 /*将目标角度从（-pi, pi）映射到（0, 8091）*/
@@ -120,7 +121,7 @@ static void Yaw_read_imu()
 		//三个角度值读取
 		ins_yaw = INS.Yaw;
 		ins_pitch = INS.Pitch;
-		ins_row = INS.Roll;
+		ins_roll = INS.Roll;
 	
 		//记录初始位置
 		if(Update_yaw_flag)
@@ -162,7 +163,7 @@ void remote_gimbal_control(int gimbal_mode)
 			Yaw_read_imu();
 			
 			//接收遥控器数值
-			gimbal_gyro.target_angle -= rc_ctrl.rc.ch[0] / 660 * 0.2; //遥控器右边左右控制yaw轴电机
+			gimbal_gyro.target_angle -= rc_ctrl.rc.ch[0] / 660 * 0.3; //遥控器右边左右控制yaw轴电机
 
 			detel_calc(&gimbal_gyro.target_angle);
 

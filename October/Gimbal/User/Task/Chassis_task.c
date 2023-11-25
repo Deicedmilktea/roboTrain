@@ -12,14 +12,18 @@ volatile int16_t Vx=0,Vy=0,Wz=0;
 int16_t Temp_Vx;
 int16_t Temp_Vy;
 int fllowflag = 0;
-//volatile int16_t motor_speed_target[4];
-volatile int16_t motor_speed_target[8];
+volatile int16_t motor_speed_target[4];
+//volatile int16_t motor_speed_target[8];
  extern RC_ctrl_t rc_ctrl;
  extern ins_data_t ins_data;
  extern float powerdata[4];
  extern uint16_t shift_flag;
  
-
+int error10 = 0;
+fp32 speed10 = 0;
+fp32 motor5_speed = 0;
+fp32 motor6_speed = 0; 
+ 
  double rx=0.2,ry=0.2;
 // Save imu data
 
@@ -73,17 +77,19 @@ void RC_move(){
         pid_init(&motor_pid_chassis[i], chassis_motor_pid, 6000, 6000); //init pid parameter, kp=40, ki=3, kd=0, output limit = 16384
 			}
 				pid_init(&supercap_pid, superpid, 3000, 3000); //init pid parameter, kp=40, ki=3, kd=0, output limit = 16384			
-
+				
+				// pid_init(&motor_pid_chassis[5], chassis_motor_pid, 6000, 15000);
+				// pid_init(&motor_pid_chassis[6], chassis_motor_pid, 6000, 15000);
   
     for(;;)				//底盘运动任务
     {   
 				// chassis_mode = rc_ctrl.rc.s[0];//1，3，2
-				// Calculate_speed();
+				 Calculate_speed();
 				// if(chassis_mode==1){
 				// 		motor_speed_target[CHAS_LF] =  1000;
 				// 		motor_speed_target[CHAS_RF] =  0;
 				// 		motor_speed_target[CHAS_RB] =  0;
-				// 		motor_speed_target[CHAS_LB] =  0;
+				// 		motor_speed_target[CHAS_LB] =  0;s
 				// }
 				// if(chassis_mode==2){
 				// 		RC_move();
@@ -91,16 +97,20 @@ void RC_move(){
 				//发射测试
 				// shot_mode = rc_ctrl.rc.s[0];
 
-        motor_speed_target[0] =  0;
-        motor_speed_target[1] =  0;
-        motor_speed_target[2] =  0;
-        motor_speed_target[3] =  0;
+					RC_move();
+//        motor_speed_target[0] =  1000;
+//        motor_speed_target[1] =  1000;
+//        motor_speed_target[2] =  1000;
+//        motor_speed_target[3] =  1000;
 
-        motor_speed_target[5] =  6000;
-        motor_speed_target[6] =  6000;
+        // motor_speed_target[5] =  10000;
+        // motor_speed_target[6] =  10000;
 
 				chassis_current_give();
-				
+				error10++;
+//				speed10 = motor_info_chassis[5].set_current;
+//				motor5_speed = motor_info_chassis[5].rotor_speed;
+//				motor6_speed = motor_info_chassis[6].rotor_speed;
         osDelay(1);
 
     }
@@ -161,12 +171,15 @@ void chassis_current_give()
 	
     uint8_t i=0;
         
-    for(i=0 ; i<8; i++)
+    for(i=0 ; i<4; i++)
     {
         motor_info_chassis[i].set_current = pid_calc(&motor_pid_chassis[i], motor_speed_target[i], motor_info_chassis[i].rotor_speed);
     }
-    	set_motor_current_can2(0, motor_info_chassis[0].set_current, motor_info_chassis[1].set_current, motor_info_chassis[2].set_current, motor_info_chassis[3].set_current);
-			set_motor_current_can2(1, 0, motor_info_chassis[5].set_current, motor_info_chassis[6].set_current, 0);
+		// motor_info_chassis[5].set_current = pid_calc(&motor_pid_chassis[5], motor_speed_target[5], -motor_info_chassis[5].rotor_speed);
+		// motor_info_chassis[6].set_current = pid_calc(&motor_pid_chassis[6], motor_speed_target[6], motor_info_chassis[6].rotor_speed);
+		
+    	set_motor_current_can1(0, motor_info_chassis[0].set_current, motor_info_chassis[1].set_current, motor_info_chassis[2].set_current, motor_info_chassis[3].set_current);
+			//set_motor_current_can22(0, -motor_info_chassis[5].set_current, motor_info_chassis[6].set_current, 0);
 	    //set_motor_current_can2(1, motor_info_chassis[4].set_current, motor_info_chassis[5].set_current, motor_info_chassis[6].set_current, motor_info_chassis[7].set_current);
 
 }

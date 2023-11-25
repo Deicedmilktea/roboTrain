@@ -10,6 +10,7 @@ uint16_t pPowerdata[8];
 
 uint16_t setpower = 5500;
 int canerror = 0;
+int error9 = 0;
 
 void CAN1_Init(void)
 {
@@ -61,17 +62,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)//接受中断回
   {
      uint8_t rx_data[8];
 		HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data); //receive can1 data
-		if(rx_header.StdId==0x55)//上C向下C传IMU数据
-		{	
-				
-		} 
-
-
-  }
-	//电机信息接收
-	 if(hcan->Instance == CAN2)
-  {		uint8_t             rx_data[8];
-    HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data); //receive can2 data
 		if ((rx_header.StdId >= 0x201)//201-207
 		 && (rx_header.StdId <  0x208))                  // 判断标识符，标识符为0x200+ID
 		{
@@ -83,6 +73,28 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)//接受中断回
 			if(index==0)
 			{can_cnt_1 ++;}
 		}
+		if(rx_header.StdId==0x55)//上C向下C传IMU数据
+		{	
+				
+		} 
+
+
+  }
+	//电机信息接收
+	 if(hcan->Instance == CAN2)
+  {		uint8_t             rx_data[8];
+    HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data); //receive can2 data
+//		if ((rx_header.StdId >= 0x201)//201-207
+//		 && (rx_header.StdId <  0x208))                  // 判断标识符，标识符为0x200+ID
+//		{
+//			uint8_t index = rx_header.StdId - 0x201;                  // get motor index by can_id
+//			 motor_info_chassis[index].rotor_angle    = ((rx_data[0] << 8) | rx_data[1]);
+//			 motor_info_chassis[index].rotor_speed    = ((rx_data[2] << 8) | rx_data[3]);
+//			 motor_info_chassis[index].torque_current = ((rx_data[4] << 8) | rx_data[5]);
+//			 motor_info_chassis[index].temp           =   rx_data[6];
+//			if(index==0)
+//			{can_cnt_1 ++;}
+//		}
 		if(rx_header.StdId==0x211)
 				{
 					
@@ -114,10 +126,11 @@ void can_remote(uint8_t sbus_buf[],uint8_t can_send_id)//调用can来发送遥�
 //CAN2发送信号（摩擦轮+拨盘+抬头）
 void set_motor_current_can2(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3, int16_t v4)
 {
+	uint32_t send_mail_box;
   CAN_TxHeaderTypeDef tx_header;
   uint8_t             tx_data[8];
     
-  tx_header.StdId = (id_range == 0)?(0x200):(0x1ff);//如果id_range==0则等于0x200,id_range==1则等于0x1ff（ID号）
+  tx_header.StdId = (id_range == 0)?(0x200):(0x1FF);//如果id_range==0则等于0x200,id_range==1则等于0x1ff（ID号）
   tx_header.IDE   = CAN_ID_STD;//标准帧
   tx_header.RTR   = CAN_RTR_DATA;//数据帧
 	
@@ -131,7 +144,8 @@ void set_motor_current_can2(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3
   tx_data[5] =    (v3)&0xff;
   tx_data[6] = (v4>>8)&0xff;
   tx_data[7] =    (v4)&0xff;
-  HAL_CAN_AddTxMessage(&hcan2, &tx_header, tx_data, (uint32_t*)CAN_TX_MAILBOX0);
+  HAL_CAN_AddTxMessage(&hcan2, &tx_header, tx_data, &send_mail_box);
+	error9++;
 }
 
 //CAN1发送信号（底盘+云台）
@@ -140,7 +154,7 @@ void set_motor_current_can1(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3
   uint32_t send_mail_box;
   CAN_TxHeaderTypeDef tx_header;
   uint8_t             tx_data[8];
-  tx_header.StdId = (id_range == 0)?(0x200):(0x2ff);//如果id_range==0则等于0x200,id_range==1则等于0x2ff（ID号）
+  tx_header.StdId = (id_range == 0)?(0x200):(0x2FF);//如果id_range==0则等于0x200,id_range==1则等于0x2ff（ID号）
   tx_header.IDE   = CAN_ID_STD;//标准帧
   tx_header.RTR   = CAN_RTR_DATA;//数据帧
   tx_header.DLC   = 8;		//发送数据长度（字节）
@@ -154,4 +168,28 @@ void set_motor_current_can1(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3
   tx_data[6] = (v4>>8)&0xff;
   tx_data[7] =    (v4)&0xff;
   HAL_CAN_AddTxMessage(&hcan1, &tx_header, tx_data, &send_mail_box);
+}
+
+//CAN2发送信号（摩擦轮+拨盘+抬头）
+void set_motor_current_can22(int16_t v1, int16_t v2, int16_t v3, int16_t v4)
+{
+	uint32_t send_mail_box;
+  CAN_TxHeaderTypeDef tx_header;
+  uint8_t             tx_data[8];
+    
+  tx_header.StdId = 0x1FF;//如果id_range==0则等于0x200,id_range==1则等于0x1ff（ID号）
+  tx_header.IDE   = CAN_ID_STD;//标准帧
+  tx_header.RTR   = CAN_RTR_DATA;//数据帧
+	
+  tx_header.DLC   = 8;		//发送数据长度（字节）
+
+	tx_data[0] = (v1>>8)&0xff;	//先发高八位		
+  tx_data[1] =    (v1)&0xff;
+  tx_data[2] = (v2>>8)&0xff;
+  tx_data[3] =    (v2)&0xff;
+  tx_data[4] = (v3>>8)&0xff;
+  tx_data[5] =    (v3)&0xff;
+  tx_data[6] = (v4>>8)&0xff;
+  tx_data[7] =    (v4)&0xff;
+  HAL_CAN_AddTxMessage(&hcan2, &tx_header, tx_data, &send_mail_box);
 }

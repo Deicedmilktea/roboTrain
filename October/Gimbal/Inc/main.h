@@ -121,12 +121,6 @@ extern uint8_t rx_data[8];
 #define HALL_SENSOR_PIN2_Pin GPIO_PIN_7
 #define HALL_SENSOR_PIN2_GPIO_Port GPIOI
 #define HALL_SENSOR_PIN2_EXTI_IRQn EXTI9_5_IRQn
-#define HALL_SENSOR_PIN1_Pin GPIO_PIN_6
-#define HALL_SENSOR_PIN1_GPIO_Port GPIOI
-#define HALL_SENSOR_PIN1_EXTI_IRQn EXTI9_5_IRQn
-#define down8_Pin GPIO_PIN_0
-#define down8_GPIO_Port GPIOF
-#define down8_EXTI_IRQn EXTI0_IRQn
 #define LASER_Pin GPIO_PIN_8
 #define LASER_GPIO_Port GPIOC
 #define RSTN_IST8310_Pin GPIO_PIN_6
@@ -136,6 +130,9 @@ extern uint8_t rx_data[8];
 #define DRDY_IST8310_Pin GPIO_PIN_3
 #define DRDY_IST8310_GPIO_Port GPIOG
 #define DRDY_IST8310_EXTI_IRQn EXTI3_IRQn
+#define door2_Pin GPIO_PIN_2
+#define door2_GPIO_Port GPIOC
+#define door2_EXTI_IRQn EXTI2_IRQn
 #define KEY_Pin GPIO_PIN_0
 #define KEY_GPIO_Port GPIOA
 #define CS1_ACCEL_Pin GPIO_PIN_4
@@ -150,9 +147,9 @@ extern uint8_t rx_data[8];
 #define SPI2_CS_GPIO_Port GPIOB
 #define CS1_GYRO_Pin GPIO_PIN_0
 #define CS1_GYRO_GPIO_Port GPIOB
-#define up7_Pin GPIO_PIN_15
-#define up7_GPIO_Port GPIOB
-#define up7_EXTI_IRQn EXTI15_10_IRQn
+#define door1_Pin GPIO_PIN_15
+#define door1_GPIO_Port GPIOB
+#define door1_EXTI_IRQn EXTI15_10_IRQn
 
 /* USER CODE BEGIN Private defines */
 
